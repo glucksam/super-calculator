@@ -77,7 +77,7 @@
 	for(i = 0; i<m_iSize; i++){
 		NSMutableString *line =  [[NSMutableString alloc] init];
 		for(j = 0; j < m_iSize; j++){
-			[line appendFormat:@"%f ", m_aMatrix[i][j]];
+			[line appendFormat:@"%0.3f ", m_aMatrix[i][j]];
 		}
 		[line appendFormat:@"\n"];
 		[print appendString:line];
@@ -94,7 +94,7 @@
 	for(i = 0; i<m_iSize; i++){
 		NSMutableString *line =  [[NSMutableString alloc] init];
 		for(j = 0; j < m_iSize; j++){
-			[line appendFormat:@"%f ", m_aTriangMat[i][j]];
+			[line appendFormat:@"%0.3f ", m_aTriangMat[i][j]];
 		}
 		[line appendFormat:@"\n"];
 		[print appendString:line];
@@ -114,7 +114,7 @@
 	for(i = 0; i<m_iSize; i++){
 		NSMutableString *line =  [[NSMutableString alloc] init];
 		for(j = 0; j < m_iSize; j++){
-			[line appendFormat:@"%f ", m_aInvMat[i][j]];
+			[line appendFormat:@"%0.3f ", m_aInvMat[i][j]];
 		}
 		[line appendFormat:@"\n"];
 		[print appendString:line];
