@@ -52,7 +52,7 @@
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
 													otherButtonTitles:@"Do stuff with Matrix",@"Do stuff with polynom",nil];
-    actionSheet.tag = 10;
+	actionSheet.tag = 10;
 	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
     [actionSheet release];
@@ -69,8 +69,11 @@
 		To get adjoint write adj[mat]\n\
 		To get triagonal write tri[mat]\n";
 	}else if (polynom == m_state) {
-		text = @"To add 2 polinoms write poly1+poly2\n\
-		To multiply 2 polynoms write poly1*poly2";
+		text = @"Type any polynomail in [] brackets\n\
+		from largest power to lowest\n\
+		example: x^2+(-5)x^1+(-7)x^0\n\
+		To add 2 polynomails write poly1+poly2\n\
+		To multiply 2 polynomails write poly1*poly2";
 	}
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:text
 															 delegate:self
@@ -89,7 +92,9 @@
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
 													otherButtonTitles:@"Do stuff with Matrix",@"Do stuff with polynom",nil];
-    actionSheet.tag = 10;
+	minput.text = @"";  
+	mlResult.text = @"";
+	actionSheet.tag = 10;
 	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
     [actionSheet release];
@@ -125,7 +130,9 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)theTextField {
 	if(theTextField == minput) {
 		[minput resignFirstResponder];
-		[self getResult];
+		if([minput.text compare:@""] != NSOrderedSame){
+			[self getResult];
+		}
 	}
 	return YES;
 }
@@ -152,7 +159,7 @@
 		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"det"]];
 		[A initNewMatrixWithString: ms_input];
 		[ms_Res appendFormat:@"%@\n",[A toString]];
-		[ms_Res appendFormat:@"det = %f",A.m_fdet];
+		[ms_Res appendFormat:@"det = %0.3f",A.m_fdet];
 	}else if(YES == [minput.text hasPrefix:@"adj"]){
 		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"adj"]];
 		[A initNewMatrixWithString: ms_input];
@@ -181,7 +188,7 @@
 			}else {/*it's a const*/
 				f_const = [[chunks objectAtIndex:1] floatValue];
 				[Matrix multiply: f_const: A:result];
-				[ms_Res appendFormat:@"%f*%@= \n",f_const,[A toString]];
+				[ms_Res appendFormat:@"%0.3f*%@= \n",f_const,[A toString]];
 				[ms_Res appendFormat:@"%@",[result toString]];
 			}
 			
@@ -198,39 +205,39 @@
 	[B release];
 	[result release];
 	mlResult.text = ms_Res;
-	//[ms_Res release];
-	//[ms_input release];
 }
 
 -(void) parsePolynomInput{
-	/*TODO- add bracets for polynoms*/
 	Polynom* p = [Polynom alloc];
 	Polynom* q = [Polynom alloc];
 	Polynom* res = [Polynom alloc];
 	float f_const;
+	BOOL bIsMulti = false;
 	NSMutableString* ms_Res = [NSMutableString stringWithString:@"original input:\n"];
-	NSArray *chunks = [minput.text componentsSeparatedByString: @"*"];
-	if([chunks count] == 2){/*it was multiplication*/
-		[p initNewPolinomWithString:[chunks objectAtIndex:0]];	/*first object is always a matrix*/
-		if(YES == [[chunks objectAtIndex:1] hasPrefix:@"("]){/*second object is a matrix*/
-			[q initNewPolinomWithString:[chunks objectAtIndex:1]];
-			[Polynom multiply:p :q :res];
-			[ms_Res appendFormat:@"%@*\n%@= \n",[p toString],[q toString]];
-			[ms_Res appendFormat:@"%@",[res toString]];
-		}else {/*it's a const*/
-			f_const = [[chunks objectAtIndex:1] floatValue];
-			[Polynom constMultiply:p:f_const:res];
-			[ms_Res appendFormat:@"%f*%@= \n",f_const,[p toString]];
-			[ms_Res appendFormat:@"%@",[res toString]];
+	NSMutableString *mutableString;
+	NSArray *chunks = [minput.text componentsSeparatedByString: @"["];
+	if([chunks count] == 3){/*2 polynomails operation*/
+		mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:1]];
+		if ([[chunks objectAtIndex:1]hasSuffix:@"*"]) {/*multiplication*/
+			[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]*"]];
+			bIsMulti = true;
+		}else if([[chunks objectAtIndex:1]hasSuffix:@"+"]){
+			[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]+"]];
 		}
-	}else {/*it's + */
-		chunks = [minput.text componentsSeparatedByString: @"+"];
-		[p initNewPolinomWithString:[chunks objectAtIndex:0]];
-		[q initNewPolinomWithString:[chunks objectAtIndex:1]];
+		[p initNewPolinomWithString:mutableString];
+	}
+	mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:2]];
+	[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]"]];
+	[q initNewPolinomWithString:mutableString];
+	if (bIsMulti) {
+		[Polynom multiply:p :q :res];
+		[ms_Res appendFormat:@"%@*%@= \n",[p toString],[q toString]];
+	}else {
 		[Polynom add:p :q :res];
 		[ms_Res appendFormat:@"%@+%@= \n",[p toString],[q toString]];
-		[ms_Res appendFormat:@"%@",[res toString]];
 	}
+	[ms_Res appendFormat:@"%@",[res toString]];
+
 	[p release];
 	[q release];
 	[res release];

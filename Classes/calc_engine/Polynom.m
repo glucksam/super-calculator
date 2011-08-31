@@ -57,14 +57,24 @@
 -(NSString*) toString{
 	int i;
 	NSMutableString *print = [[NSMutableString alloc]initWithString:@""];
+	bool bIsFirst = true;
+	[print appendFormat:@"["];
 	for(i = 0; i <= m_iRank ; i++){
+		if(m_fCoefficients[i] == 0)
+			continue;
+		if(bIsFirst){
+			bIsFirst = false;
+		}else {
+			[print appendFormat:@" + "];
+		}
+
 		if(0 == i){
-			[print appendFormat:@"%f", m_fCoefficients[i]];
+			[print appendFormat:@"%.3f", m_fCoefficients[i]];
 			continue;
 		}
-		[print appendFormat:@" + %f*x^%d", m_fCoefficients[i],i];
+		[print appendFormat:@"%.3f*x^%d", m_fCoefficients[i],i];
 	}
-
+	[print appendFormat:@"]"];
 	NSString* res = [NSString stringWithString: print];
 	[print release];
 	return res;
