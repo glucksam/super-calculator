@@ -1,0 +1,8 @@
+//
+// Prefix header for all source files of the 'unsigned_calc' target in the 'unsigned_calc' project
+//
+
+#ifdef __OBJC__
+    #import <Foundation/Foundation.h>
+    #import <UIKit/UIKit.h>
+#endif
