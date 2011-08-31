@@ -4,7 +4,7 @@
 
 In the main screen you need to choose with which object you would like to work (for now matrix of polynomial).
 
-http://code.google.com/p/super-calculator/downloads/main_screen.png
+[http://www.code.google.com/p/super-calculator/downloads/main_screen.png main screen]
 
 then you get an empty screen. If you touch the "More about input" button, you get more instruction about what you can do with that specific object, and how to request for that. If you press the "other object" button, you get back to the main screen.
 
