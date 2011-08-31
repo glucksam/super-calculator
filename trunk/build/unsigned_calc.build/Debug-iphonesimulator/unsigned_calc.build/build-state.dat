@@ -1,0 +1,362 @@
+Tunsigned_calc
+v7
+r0
+t336483204.868417
+cCheck dependencies
+cProcessInfoPlistFile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/Info.plist unsigned_calc-Info.plist
+cCompileXIB /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/MainWindow.xib
+cCompileXIB /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calcViewController.xib
+cProcessPCH /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch.gch unsigned_calc_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/main.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcAppDelegate.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcViewController.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/MathObject.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Matrix.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Polynom.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m normal i386 objective-c com.apple.compilers.gcc.4_2
+cLd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc normal i386
+cGenerateDSYMFile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app.dSYM /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc
+cTouch /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk
+c000000004CC128950000000000000110
+t1287727253
+s272
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/CoreGraphics.framework/CoreGraphics
+c000000004CC12246000000000029B310
+t1287725638
+s2732816
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/Foundation.framework/Foundation
+c000000004CC1226D000000000029D5D0
+t1287725677
+s2741712
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/Foundation.framework/Headers/Foundation.h
+c000000004CC1225F0000000000001466
+t1287725663
+s5222
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/Foundation.framework/Headers/NSObject.h
+c000000004CC1225F0000000000000EAD
+t1287725663
+s3757
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/UIKit.framework/Headers/UIKit.h
+c000000004CC1281F0000000000000AA1
+t1287727135
+s2721
+
+N/Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk/System/Library/Frameworks/UIKit.framework/UIKit
+c000000004CC12883000000000074D7B0
+t1287727235
+s7657392
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.h
+c000000004DF8F98200000000000001AF
+t1308162434
+s431
+i<Foundation/NSObject.h>
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m
+c000000004DF8F2110000000000000317
+t1308160529
+s791
+i"MathObject.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.h
+c000000004E085284000000000000049B
+t1309168260
+s1179
+i"MathObject.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m
+c000000004E0A09200000000000002824
+t1309280544
+s10276
+i"MathObject.h"
+i"Matrix.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.h
+c000000004E085A6D0000000000000315
+t1309170285
+s789
+i"MathObject.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m
+c000000004E085ABF00000000000010A0
+t1309170367
+s4256
+i"Polynom.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.h
+c000000004E2945900000000000000203
+t1311327632
+s515
+i<UIKit/UIKit.h>
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m
+c000000004E2945900000000000000AB3
+t1311327632
+s2739
+i"unsigned_calcAppDelegate.h"
+i"unsigned_calcViewController.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.h
+c000000004E2946A40000000000000428
+t1311327908
+s1064
+i<UIKit/UIKit.h>
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m
+c000000004E5E1A2D00000000000022EE
+t1314789933
+s8942
+i"unsigned_calcViewController.h"
+i"calc_engine/Matrix.h"
+i"calc_engine/Polynom.h"
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/MainWindow.xib
+c000000004E2945900000000000004E71
+t1311327632
+s20081
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app
+t1314789935
+s238
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app.dSYM
+t1314789935
+s102
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/Info.plist
+t1311328465
+s651
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/MainWindow.nib
+t1311328141
+s1135
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/PkgInfo
+t1311328465
+s8
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc
+t1314789935
+s48592
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calcViewController.nib
+t1311328141
+s2361
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/MathObject.o
+t1311328143
+s8720
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Matrix.o
+t1311328143
+s32900
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Polynom.o
+t1311328143
+s19232
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/main.o
+t1311328143
+s6332
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calc.LinkFileList
+c000000004E29478C00000000000003AE
+t1311328140
+s942
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcAppDelegate.o
+t1311328143
+s51504
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcViewController.o
+t1314789934
+s70612
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m
+c000000004E294590000000000000016F
+t1311327632
+s367
+i<UIKit/UIKit.h>
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calcViewController.xib
+c000000004E0755590000000000007C51
+t1309103449
+s31825
+
+N/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calc_Prefix.pch
+c000000004E29459000000000000000C3
+t1311327632
+s195
+i<Foundation/Foundation.h>
+i<UIKit/UIKit.h>
+
+N/var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch.gch
+t1311328142
+s15453392
+
+Nunsigned_calc-Info.plist
+c000000004E2948D10000000000000397
+t1311328465
+s919
+
+CCheck dependencies
+r0
+lSLF07#2@18"Check dependencies336483204#336483204#0(0"0(0#1#0"8615865728#0"0#
+
+CCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/MathObject.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s333020943.210984
+e333020943.275398
+r1
+xCompileC
+xbuild/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/MathObject.o
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m:34: warning: incomplete implementation of class 'MathObject'
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m:34: warning: method definition for '-toString' not found
+lSLF07#2@93"Compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m333020943#333020943#0(290"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m:34: warning: incomplete implementation of class 'MathObject'/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m:34: warning: method definition for '-toString' not found2(22@47"Incomplete implementation of class 'MathObject'333020943#0#147#0(6@85"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m329853329#34#0#34#0#38"incomplete implementation of class '*'0(22@43"Method definition for '-toString' not found333020943#147#143#0(6@85"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m329853329#34#0#34#0#35"method definition for '*' not found0(0#0#85"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m8613455776#2220"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -include /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/MathObject.m -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/MathObject.o0#
+
+CCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Matrix.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s333020943.275508
+e333020943.430832
+r1
+xCompileC
+xbuild/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Matrix.o
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@89"Compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m333020943#333020943#0(0"0(0#0#81"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m7955443211268599808#2212"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -include /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Matrix.m -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Matrix.o0#
+
+CCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Polynom.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s333020943.288044
+e333020943.374825
+r1
+xCompileC
+xbuild/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Polynom.o
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@90"Compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m333020943#333020943#0(0"0(0#0#82"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m8613778304#2214"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -include /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/calc_engine/Polynom.m -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/Polynom.o0#
+
+CCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/main.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s333020943.011846
+e333020943.193486
+r1
+xCompileC
+xbuild/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/main.o
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@67"Compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m333020943#333020943#0(0"0(0#0#59"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m8605114432#2188"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -include /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/main.m -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/main.o0#
+
+CCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcAppDelegate.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s333020943.013100
+e333020943.210883
+r1
+xCompileC
+xbuild/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcAppDelegate.o
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@95"Compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m333020943#333020943#0(0"0(0#0#87"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m8608382528#2236"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -include /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcAppDelegate.m -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcAppDelegate.o0#
+
+CCompileC build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcViewController.o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m normal i386 objective-c com.apple.compilers.gcc.4_2
+s336482733.232228
+e336482734.575987
+r1
+xCompileC
+xbuild/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcViewController.o
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m: In function '-[unsigned_calcViewController viewDidLoad]':
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m:54: warning: class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m: In function '-[unsigned_calcViewController doMoreButton]':
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m:79: warning: class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m: In function '-[unsigned_calcViewController doOtherObjectButton]':
+o/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m:91: warning: class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol
+lSLF07#2@98"Compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m336482733#336482734#0(1047"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m: In function '-[unsigned_calcViewController viewDidLoad]':/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m:54: warning: class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m: In function '-[unsigned_calcViewController doMoreButton]':/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m:79: warning: class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m: In function '-[unsigned_calcViewController doOtherObjectButton]':/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m:91: warning: class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol3(22@91"Class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol336482734#150#196#0(6@90"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m336482733#54#0#54#0#45"class '*' does not implement the '*' protocol0(22@91"Class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol336482734#497#196#0(6@90"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m336482733#79#0#79#0#45"class '*' does not implement the '*' protocol0(22@91"Class 'unsigned_calcViewController' does not implement the 'UIActionSheetDelegate' protocol336482734#851#196#0(6@90"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m336482733#91#0#91#0#45"class '*' does not implement the '*' protocol0(0#0#90"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m8444091450139044864#2242"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -include /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/Classes/unsigned_calcViewController.m -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calcViewController.o0#
+
+CCompileXIB /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/MainWindow.xib
+s333020941.029672
+e333020941.626115
+r1
+xCompileXIB
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/MainWindow.xib
+lSLF07#2@25"CompileXIB MainWindow.xib333020941#333020941#0(0"0(0#0#67"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/MainWindow.xib8613784256#618"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.2    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/MainWindow.nib /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/MainWindow.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk0#
+
+CCompileXIB /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calcViewController.xib
+s333020941.032726
+e333020941.628053
+r1
+xCompileXIB
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calcViewController.xib
+lSLF07#2@42"CompileXIB unsigned_calcViewController.xib333020941#333020941#0(0"0(0#0#84"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calcViewController.xib8613449312#652"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv IBC_MINIMUM_COMPATIBILITY_VERSION 4.2    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/ibtool --errors --warnings --notices --output-format human-readable-text --compile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calcViewController.nib /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calcViewController.xib --sdk /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk0#
+
+CGenerateDSYMFile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app.dSYM /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc
+s336482735.393054
+e336482735.604008
+r1
+xGenerateDSYMFile
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app.dSYM
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc
+lSLF07#2@127"GenerateDSYMFile build/Debug-iphonesimulator/unsigned_calc.app.dSYM build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc336482735#336482735#0(0"0(0#0#112"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc8613878400#443"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/usr/bin/dsymutil /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app.dSYM0#
+
+CLd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc normal i386
+s336482734.576101
+e336482735.392880
+r1
+xLd
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc
+xnormal
+xi386
+lSLF07#2@117"Link /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc336482734#336482735#0(0"0(0#0#0"28147931469971560#1000"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv MACOSX_DEPLOYMENT_TARGET 10.6    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -arch i386 -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -L/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -filelist /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/Objects-normal/i386/unsigned_calc.LinkFileList -mmacosx-version-min=10.6 -Xlinker -objc_abi_version -Xlinker 2 -framework Foundation -framework UIKit -framework CoreGraphics -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/unsigned_calc0#
+
+CProcessInfoPlistFile /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/Info.plist unsigned_calc-Info.plist
+s333021265.584473
+e333021265.604340
+r1
+xProcessInfoPlistFile
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/Info.plist
+xunsigned_calc-Info.plist
+lSLF07#2@32"Process unsigned_calc-Info.plist333021265#333021265#0(0"0(0#0#77"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calc-Info.plist30962689826685044#539"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    builtin-infoPlistUtility unsigned_calc-Info.plist -genpkginfo /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/PkgInfo -expandbuildsettings -format binary -platform iphonesimulator -o /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app/Info.plist0#
+
+CProcessPCH /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch.gch unsigned_calc_Prefix.pch normal i386 objective-c com.apple.compilers.gcc.4_2
+s333020941.628169
+e333020943.011610
+r1
+xProcessPCH
+x/var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch.gch
+xunsigned_calc_Prefix.pch
+xnormal
+xi386
+xobjective-c
+xcom.apple.compilers.gcc.4_2
+lSLF07#2@35"Precompile unsigned_calc_Prefix.pch333020941#333020943#0(0"0(0#0#77"/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calc_Prefix.pch8610480992#2060"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv LANG en_US.US-ASCII    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin/gcc-4.2 -x objective-c-header -arch i386 -fmessage-length=0 -pipe -std=c99 -Wno-trigraphs -fpascal-strings -fasm-blocks -O0 -Wreturn-type -Wunused-variable -isysroot /Developer/Platforms/iPhoneSimulator.platform/Developer/SDKs/iPhoneSimulator4.2.sdk -fexceptions -fvisibility=hidden -mmacosx-version-min=10.6 -gdwarf-2 -fobjc-abi-version=2 -fobjc-legacy-dispatch -D__IPHONE_OS_VERSION_MIN_REQUIRED=40200 -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-generated-files.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-own-target-headers.hmap -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-all-target-headers.hmap -iquote /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/unsigned_calc-project-headers.hmap -F/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/include -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources/i386 -I/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/unsigned_calc.build/Debug-iphonesimulator/unsigned_calc.build/DerivedSources -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/unsigned_calc_Prefix.pch -o /var/folders/PT/PTjwC2HMH0ma+osYpXx+Dk+++TI/-Caches-/com.apple.Xcode.501/SharedPrecompiledHeaders/unsigned_calc_Prefix-eujgzvnvhucwyzcjcsmuhazfejwf/unsigned_calc_Prefix.pch.gch0#
+
+CTouch /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app
+s336482735.604526
+e336482735.622936
+r1
+xTouch
+x/Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app
+lSLF07#2@104"Touch /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app336482735#336482735#0(0"0(0#0#0"8614606112#312"    cd /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc    setenv PATH "/Developer/Platforms/iPhoneSimulator.platform/Developer/usr/bin:/Developer/usr/bin:/usr/bin:/bin:/usr/sbin:/sbin"    /usr/bin/touch -c /Users/mad_cow/Documents/XcodeWorkshop/unsigned_calc/build/Debug-iphonesimulator/unsigned_calc.app0#
+
