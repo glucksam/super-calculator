@@ -6,7 +6,18 @@ In the main screen you need to choose with which object you would like to work (
 
 http://super-calculator.googlecode.com/files/main_screen.png
 
-then you get an empty screen. If you touch the "More about input" button, you get more instruction about what you can do with that specific object, and how to request for that. If you press the "other object" button, you get back to the main screen.
+Next, assuming you chose a matrix you get an empty screen. An empty matrix screen looks like this:
+ 
+http://super-calculator.googlecode.com/files/matrix_main.png 
 
+Note that you have an input example at the head of the screen.
 
-See attached pictures.
+If you touch the "More about input" button, you get more instruction about what you can do with that specific object, and how to request for that.
+
+http://super-calculator.googlecode.com/files/matrix_mote_about_input.png
+
+Last, the result will look something like this:
+
+http://super-calculator.googlecode.com/files/matrix_result.png
+
+If you press the "other object" button, you get back to the main screen.
