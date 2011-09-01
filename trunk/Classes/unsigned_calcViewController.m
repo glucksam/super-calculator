@@ -67,7 +67,8 @@
 		To get inverse write inv[mat]\n\
 		To get determinant write det[mat]\n\
 		To get adjoint write adj[mat]\n\
-		To get triagonal write tri[mat]\n";
+		To get triagonal write tri[mat]\n\
+		To get characteristic polynomial write char[mat]\n";
 	}else if (polynom == m_state) {
 		text = @"Type any polynomail in [] brackets\n\
 		from largest power to lowest\n\
@@ -176,6 +177,11 @@
 		[A initNewMatrixWithString: ms_input];
 		[ms_Res appendFormat:@"%@\n",[A toString]];
 		[ms_Res appendFormat:@"triangle matrix:\n %@",[A triagonalMatrixToString]];
+	}else if (YES == [minput.text hasPrefix:@"char"]) {
+			[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"char"]];
+			[A initNewMatrixWithString: ms_input];
+			[ms_Res appendFormat:@"%@\n",[A toString]];
+			[ms_Res appendFormat:@"char = %@",[A CharacteristicPolynomailToString]];
 	}else {
 		NSArray *chunks = [minput.text componentsSeparatedByString: @"*"];
 		if([chunks count] == 2){/*it was multiplication*/
@@ -211,7 +217,6 @@
 	Polynom* p = [Polynom alloc];
 	Polynom* q = [Polynom alloc];
 	Polynom* res = [Polynom alloc];
-	float f_const;
 	BOOL bIsMulti = false;
 	NSMutableString* ms_Res = [NSMutableString stringWithString:@"original input:\n"];
 	NSMutableString *mutableString;

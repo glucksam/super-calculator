@@ -7,19 +7,21 @@
 //
 
 #import "MathObject.h"
+#import "Polynom.h"
 
 @interface Matrix : MathObject {
 	@private
 	float** m_aMatrix;
 	float** m_aTriangMat;
 	float** m_aInvMat;
+	Polynom* m_pCharPol;
 	int m_iSize;
 	float m_fdet;
 	float m_fTrace;
 }
 @property (readonly) float m_fdet;
 @property (readonly) float m_fTrace;
-@property (readonly) int m_iSize;;
+@property (readonly) int m_iSize;
 /*private functions*/
 -(void) det;
 -(float) det:(int*) row:(int*) column:(int) size;
@@ -28,6 +30,7 @@
 -(void) set:(int)i:(int)j:(float)val;
 -(float) calcAdj:(int)i:(int)j;
 -(void) triagonalizeAndInverse;
+-(void) getCharacteristicPolynomail;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;
 -(void) initNewMatrix:(int) size;
@@ -36,6 +39,7 @@
 -(void) adjMat:(Matrix*)adj;
 -(NSString*) triagonalMatrixToString;
 -(NSString*) inverseMatrixToString;
+-(NSString*) CharacteristicPolynomailToString;
 /*static*/  
 +(bool) compare:(Matrix*) A: (Matrix*) B;
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;

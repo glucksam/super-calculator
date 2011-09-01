@@ -34,7 +34,11 @@
 			coeffs [i+j] += [p getCoefficiant:i]*[q getCoefficiant:j];
 		}
 	}
+
 	[prod initNewPolinomWithCoeffs:deg :coeffs];
+	if([Polynom isZeroPoly: prod]){
+		[prod zerofy];
+	}
 	free(coeffs);
 }
 /**********************************************************************************************/
@@ -54,13 +58,33 @@
 	free(coeffs);
 }
 /**********************************************************************************************/
++(bool) isZeroPoly:(Polynom*)p{
+	int i;
+	for (i = 0; i<[p getRank]; i++) {
+		if([p getCoefficiant:i] != 0)
+			return false;
+	}
+	return true;
+}
+/**********************************************************************************************/
+-(void) zerofy{
+	[self clean];
+	[Polynom initCoefficiant:&m_fCoefficients :m_iRank];
+}
+/**********************************************************************************************/
+-(void) clean{
+	m_iRank = 0;
+	free(m_fCoefficients);
+	m_fCoefficients = nil;
+}
+/**********************************************************************************************/
 -(NSString*) toString{
 	int i;
 	NSMutableString *print = [[NSMutableString alloc]initWithString:@""];
 	bool bIsFirst = true;
 	[print appendFormat:@"["];
 	for(i = 0; i <= m_iRank ; i++){
-		if(m_fCoefficients[i] == 0)
+		if(m_iRank != 0 && m_fCoefficients[i] == 0)
 			continue;
 		if(bIsFirst){
 			bIsFirst = false;
@@ -78,6 +102,10 @@
 	NSString* res = [NSString stringWithString: print];
 	[print release];
 	return res;
+}
+/**********************************************************************************************/
+-(int) getRank{
+	return m_iRank;
 }
 /**********************************************************************************************/
 -(float) getCoefficiant:(int)index{
@@ -109,7 +137,7 @@
 	memset(*coef, 0, (size + 1) * sizeof(float));
 }
 /**********************************************************************************************/
-/*input must be given with + even if the coefficiants are negative for instance x^2+(-5)x^1+(-7)x^0*/
+/*input must be given with + even if the coefficiants are negative for instance 1x^2+-5x^1+-7x^0*/
 -(void) initNewPolinomWithString:(NSString*) input{
 	[super init];
 	[super setObjName:@"Polynom"];
@@ -141,9 +169,6 @@
 		}
 		NSArray* subChunks = [string componentsSeparatedByString: @"+"];
 		iTemp = [[subChunks objectAtIndex:0] intValue];
-		if (0 == fPrev) {
-			fPrev = 1;
-		}
 		m_fCoefficients [iTemp] = fPrev;
 		if (2 == [subChunks count]) {
 			fPrev = [[subChunks objectAtIndex:1] floatValue];
@@ -153,7 +178,9 @@
 /**********************************************************************************************/
 -(void) dealloc {
     NSLog(@"Deallocing Polynom\n" );
-	free(m_fCoefficients);
+	if (m_fCoefficients!= nil) {
+		free(m_fCoefficients);
+	}
 	[super dealloc];
 }
 
