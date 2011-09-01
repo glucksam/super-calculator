@@ -8,6 +8,7 @@
 
 #import "MathObject.h"
 #import "Matrix.h"
+#import "polymatrix.h"
 
 
 @implementation Matrix
@@ -125,6 +126,13 @@
 	return res;	
 }
 /**********************************************************************************************/
+-(NSString*) CharacteristicPolynomailToString{
+	[self getCharacteristicPolynomail];
+	if(nil == m_pCharPol)
+		return @"";
+	return [m_pCharPol toString];
+}
+/**********************************************************************************************/
 -(void) triagonalizeAndInverse{
 	int i,j,k;
 	float fTemp,fInvTemp, fCurMult;
@@ -201,7 +209,14 @@
 	}
 	free(mDiag);
 }
-
+/**********************************************************************************************/
+-(void) getCharacteristicPolynomail{
+	polymatrix* p = [polymatrix alloc];
+	[p initPolymatrixWithMatrix:self];
+	m_pCharPol = [Polynom alloc];
+	[p det:(Polynom *)m_pCharPol];
+	[p release];
+}
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{
 	int i,j;
@@ -336,7 +351,7 @@
 			[self set: i:j:[[line objectAtIndex: j] floatValue]];
 		}
 	}
-	NSLog(@"%@",[self toString]);
+	NSLog(@"\n%@",[self toString]);
 	[self update];
 }
 /**********************************************************************************************/
@@ -355,6 +370,7 @@
 	if (nil != m_aInvMat) { /*the matrix was uninvertible*/
 		free(m_aInvMat);
 	}
+	[m_pCharPol release];
 	[super dealloc];
 }
 
