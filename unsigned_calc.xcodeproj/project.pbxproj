@@ -18,6 +18,7 @@
 		36068F9713D97DB600EF1936 /* MathObject.m in Sources */ = {isa = PBXBuildFile; fileRef = 36068F9213D97DB600EF1936 /* MathObject.m */; };
 		36068F9813D97DB600EF1936 /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 36068F9413D97DB600EF1936 /* Matrix.m */; };
 		36068F9913D97DB600EF1936 /* Polynom.m in Sources */ = {isa = PBXBuildFile; fileRef = 36068F9613D97DB600EF1936 /* Polynom.m */; };
+		366C6DA2140E8EDA00483878 /* polymatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 366C6DA1140E8EDA00483878 /* polymatrix.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -39,6 +40,8 @@
 		36068F9413D97DB600EF1936 /* Matrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix.m; sourceTree = "<group>"; };
 		36068F9513D97DB600EF1936 /* Polynom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Polynom.h; sourceTree = "<group>"; };
 		36068F9613D97DB600EF1936 /* Polynom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Polynom.m; sourceTree = "<group>"; };
+		366C6DA0140E8EDA00483878 /* polymatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polymatrix.h; sourceTree = "<group>"; };
+		366C6DA1140E8EDA00483878 /* polymatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = polymatrix.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* unsigned_calc-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "unsigned_calc-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -126,6 +129,8 @@
 				36068F9413D97DB600EF1936 /* Matrix.m */,
 				36068F9513D97DB600EF1936 /* Polynom.h */,
 				36068F9613D97DB600EF1936 /* Polynom.m */,
+				366C6DA0140E8EDA00483878 /* polymatrix.h */,
+				366C6DA1140E8EDA00483878 /* polymatrix.m */,
 			);
 			path = calc_engine;
 			sourceTree = "<group>";
@@ -197,6 +202,7 @@
 				36068F9713D97DB600EF1936 /* MathObject.m in Sources */,
 				36068F9813D97DB600EF1936 /* Matrix.m in Sources */,
 				36068F9913D97DB600EF1936 /* Polynom.m in Sources */,
+				366C6DA2140E8EDA00483878 /* polymatrix.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
