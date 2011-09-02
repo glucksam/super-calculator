@@ -83,7 +83,7 @@
 		[temp release];
 		return;
 	}
-	[pDet initNewPolinomWithString:@""];
+	[pDet initNewPolinomWithString:@"0"];
 	for (i = 0; i < size; i++) {
 		int* n_row = (int*)malloc((size-1) * sizeof(int));
 		int* n_column = (int*)malloc((size-1) * sizeof(int));
