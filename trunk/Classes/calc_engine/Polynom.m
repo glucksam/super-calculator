@@ -60,7 +60,7 @@
 /**********************************************************************************************/
 +(bool) isZeroPoly:(Polynom*)p{
 	int i;
-	for (i = 0; i<[p getRank]; i++) {
+	for (i = 0; i<=[p getRank]; i++) {
 		if([p getCoefficiant:i] != 0)
 			return false;
 	}
@@ -96,7 +96,11 @@
 			[print appendFormat:@"%.3f", m_fCoefficients[i]];
 			continue;
 		}
-		[print appendFormat:@"%.3f*x^%d", m_fCoefficients[i],i];
+		if (m_fCoefficients[i] == 1) {
+			[print appendFormat:@"x^%d",i];
+		}else{
+			[print appendFormat:@"%.3f*x^%d", m_fCoefficients[i],i];
+		}
 	}
 	[print appendFormat:@"]"];
 	NSString* res = [NSString stringWithString: print];
