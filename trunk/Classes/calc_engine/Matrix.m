@@ -126,11 +126,20 @@
 	return res;	
 }
 /**********************************************************************************************/
--(NSString*) CharacteristicPolynomailToString{
-	[self getCharacteristicPolynomail];
+-(NSString*) CharacteristicPolynomailandEigenvaluesToString{
+	[self getCharacteristicPolynomailAndEigenvalues];
 	if(nil == m_pCharPol)
 		return @"";
-	return [m_pCharPol toString];
+	NSMutableString* mutStr = [[NSMutableString alloc] init];
+	[mutStr appendFormat:@"%@\n",[m_pCharPol toString]];
+	int i;
+	for (i = 1; i<= m_fEigenValues[0]; i++) {
+		NSLog(@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]);
+		[mutStr appendFormat:@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]];
+	}
+	NSString* res = [NSString stringWithString: mutStr];
+	[mutStr release];
+	return res;
 }
 /**********************************************************************************************/
 -(void) triagonalizeAndInverse{
@@ -210,12 +219,14 @@
 	free(mDiag);
 }
 /**********************************************************************************************/
--(void) getCharacteristicPolynomail{
+-(void) getCharacteristicPolynomailAndEigenvalues{
 	polymatrix* p = [polymatrix alloc];
 	[p initPolymatrixWithMatrix:self];
 	m_pCharPol = [Polynom alloc];
 	[p det:(Polynom *)m_pCharPol];
 	[p release];
+	NSLog(@"characteristic polynomial = %@", [m_pCharPol toString]);
+	[Polynom getRationalRoots:m_pCharPol :&m_fEigenValues];
 }
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{

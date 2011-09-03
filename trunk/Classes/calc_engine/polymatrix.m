@@ -41,9 +41,9 @@
 	for (i = 0; i < m_iSize; i++) {
 		for (j = 0; j < m_iSize; j++) {
 			if(i == j){
-				string = [[NSString alloc] initWithFormat:@"1x^1+-%fx^0",[A getElement:i :j]];
+				string = [[NSString alloc] initWithFormat:@"1x^1+%fx^0",(-1)*[A getElement:i :j]];
 			}else{
-				string = [[NSString alloc] initWithFormat:@"-%fx^0",[A getElement:i :j]];
+				string = [[NSString alloc] initWithFormat:@"%fx^0",(-1)*[A getElement:i :j]];
 			}
 			[self set: i:j:string];
 		}

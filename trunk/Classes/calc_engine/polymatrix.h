@@ -21,6 +21,5 @@
 -(void) initNewPolymatrix:(int) size;
 -(void) initPolymatrixWithMatrix:(Matrix*) A;
 -(void) det:(Polynom*) pDet;
--(NSString*) triagonalMatrixToString;
 -(NSString*) toString;
 @end

@@ -25,10 +25,13 @@
 -(int) getRank;
 -(void) zerofy;
 -(void) clean;
+-(float) getValue:(float) x;
 /*static functions*/
 +(void) initCoefficiant:(float**) coef: (int) size;
 +(void) constMultiply:(Polynom*) p:(float) constant:(Polynom*) pRes;
 +(void) multiply:(Polynom*) p:(Polynom*) q:(Polynom*) prod;
 +(void) add:(Polynom*) p:(Polynom*) q:(Polynom*) pSum;
 +(bool) isZeroPoly:(Polynom*)p;
++(bool) isRoot:(Polynom*)p:(float)x;
++(void) getRationalRoots:(Polynom*)p:(float**)roots;
 @end
