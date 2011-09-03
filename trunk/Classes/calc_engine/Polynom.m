@@ -37,7 +37,7 @@
 	}
 
 	[prod initNewPolinomWithCoeffs:deg :coeffs];
-	if([Polynom isZeroPoly: prod]){
+	if([prod isZeroPoly]){
 		[prod zerofy];
 	}
 	free(coeffs);
@@ -59,10 +59,10 @@
 	free(coeffs);
 }
 /**********************************************************************************************/
-+(bool) isZeroPoly:(Polynom*)p{
+-(bool) isZeroPoly{
 	int i;
-	for (i = 0; i<=[p getRank]; i++) {
-		if([p getCoefficiant:i] != 0)
+	for (i = 0; i<=m_iRank; i++) {
+		if(m_fCoefficients[i] != 0)
 			return false;
 	}
 	return true;
@@ -72,26 +72,32 @@
  since f(p/q) = a0+a1p/q+...+anp^n/q^n if p/q is a root, then f(p/q) = 0 = a0+a1p/q+...+anp^n/q^n
  therefore 0 = a0q^n+a1q^(n-1)p+...+anp^n then q is a devisor of an. Similarily p is a devisor of a0 
  */
-+(void) getRationalRoots:(Polynom*)p:(float**)roots{
+-(void) getRationalRoots:(float**)roots{
 	int* a_factors;
 	int* z_factors;
 	float* optional_roots;
-	if([p getCoefficiant:0] == 0){
-		*roots = (float*) malloc(1* sizeof(float));
-		(*roots)[0] = 0;
+	if(m_fCoefficients[0]== 0){
+		Polynom* p = [Polynom alloc];
+		[p initNewPolinomWithCoeffs:m_iRank-1 :m_fCoefficients+1];
+		[p getRationalRoots:roots];
+		if (!([Operations isInArray:*roots :0])) {
+			(*roots)[(int)((*roots)[0])+1] = 0;
+			(*roots)[0] = (*roots)[0]+1;
+			[p release];
+		}
 		return;
 	}
-	[Operations getFactors:abs([p getCoefficiant:0]):&a_factors];
-	[Operations getFactors:abs([p getCoefficiant:[p getRank]]):&z_factors];
+	[Operations getFactors:abs(m_fCoefficients[0]):&a_factors];
+	[Operations getFactors:abs(m_fCoefficients[m_iRank]):&z_factors];
 	[Operations getCombinations:a_factors:z_factors:&optional_roots];
 	int i, ammount = 0;
 	*roots = (float*) malloc((optional_roots[0]+1)* sizeof(float));
 	for (i = 1; i<=optional_roots[0]; i++) {
-		if ([Polynom isRoot:p:optional_roots[i]]) {
+		if ([self isRoot:optional_roots[i]]) {
 			ammount++;
 			(*roots)[ammount] = optional_roots[i];
 		}
-		if ([Polynom isRoot:p:((-1)*optional_roots[i])]) {
+		if ([self isRoot:((-1)*optional_roots[i])]) {
 			ammount++;
 			(*roots)[ammount] = ((-1)*optional_roots[i]);
 		}
@@ -103,8 +109,8 @@
 	free(optional_roots);
 }
 /**********************************************************************************************/
-+(bool) isRoot:(Polynom*)p:(float)x{
-	if([p getValue:x] == 0)
+-(bool) isRoot:(float)x{
+	if([self getValue:x] == 0)
 		return true;
 	return false;
 }
