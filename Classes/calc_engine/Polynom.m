@@ -7,6 +7,7 @@
 //
 
 #import "Polynom.h"
+#import "Operations.h"
 
 
 @implementation Polynom
@@ -67,6 +68,57 @@
 	return true;
 }
 /**********************************************************************************************/
+/*
+ since f(p/q) = a0+a1p/q+...+anp^n/q^n if p/q is a root, then f(p/q) = 0 = a0+a1p/q+...+anp^n/q^n
+ therefore 0 = a0q^n+a1q^(n-1)p+...+anp^n then q is a devisor of an. Similarily p is a devisor of a0 
+ */
++(void) getRationalRoots:(Polynom*)p:(float**)roots{
+	int* a_factors;
+	int* z_factors;
+	float* optional_roots;
+	if([p getCoefficiant:0] == 0){
+		*roots = (float*) malloc(1* sizeof(float));
+		(*roots)[0] = 0;
+		return;
+	}
+	[Operations getFactors:abs([p getCoefficiant:0]):&a_factors];
+	[Operations getFactors:abs([p getCoefficiant:[p getRank]]):&z_factors];
+	[Operations getCombinations:a_factors:z_factors:&optional_roots];
+	int i, ammount = 0;
+	*roots = (float*) malloc((optional_roots[0]+1)* sizeof(float));
+	for (i = 1; i<=optional_roots[0]; i++) {
+		if ([Polynom isRoot:p:optional_roots[i]]) {
+			ammount++;
+			(*roots)[ammount] = optional_roots[i];
+		}
+		if ([Polynom isRoot:p:((-1)*optional_roots[i])]) {
+			ammount++;
+			(*roots)[ammount] = ((-1)*optional_roots[i]);
+		}
+		
+	}
+	(*roots)[0] = ammount;
+	free(a_factors);
+	free(z_factors);
+	free(optional_roots);
+}
+/**********************************************************************************************/
++(bool) isRoot:(Polynom*)p:(float)x{
+	if([p getValue:x] == 0)
+		return true;
+	return false;
+}
+/**********************************************************************************************/
+-(float) getValue:(float) x
+{
+	int i;
+	float fRes = 0.0;
+	for (i = 0; i<=m_iRank; i++) {
+		fRes += m_fCoefficients[i]*pow(x, i);
+	}
+	return fRes;
+}
+/**********************************************************************************************/
 -(void) zerofy{
 	[self clean];
 	[Polynom initCoefficiant:&m_fCoefficients :m_iRank];
@@ -80,7 +132,8 @@
 /**********************************************************************************************/
 -(NSString*) toString{
 	int i;
-	NSMutableString *print = [[NSMutableString alloc]initWithString:@""];
+	[super init];
+	[super setObjName:@"Polynom"];	NSMutableString *print = [[NSMutableString alloc]initWithString:@""];
 	bool bIsFirst = true;
 	[print appendFormat:@"["];
 	for(i = 0; i <= m_iRank ; i++){
@@ -128,6 +181,8 @@
 }
 /**********************************************************************************************/
 -(void) initNewPolinomWithCoeffs: (int) rank: (float*) coeffs{
+	[super init];
+	[super setObjName:@"Polynom"];
 	m_iRank = rank;
 	[Polynom initCoefficiant:&m_fCoefficients :m_iRank];
 	int i;
