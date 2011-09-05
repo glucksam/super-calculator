@@ -226,7 +226,7 @@
 	[p det:(Polynom *)m_pCharPol];
 	[p release];
 	NSLog(@"characteristic polynomial = %@", [m_pCharPol toString]);
-	[Polynom getRationalRoots:m_pCharPol :&m_fEigenValues];
+	[m_pCharPol getRationalRoots:&m_fEigenValues];
 }
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{

@@ -68,13 +68,15 @@
 		To get determinant write det[mat]\n\
 		To get adjoint write adj[mat]\n\
 		To get triagonal write tri[mat]\n\
-		To get characteristic polynomial write char[mat]\n";
+		To get characteristic polynomial and\n\
+		rational eigenvaues write char[mat]\n";
 	}else if (polynom == m_state) {
 		text = @"Type any polynomail in [] brackets\n\
-		from largest power to lowest\n\
 		example: x^2+(-5)x^1+(-7)x^0\n\
-		To add 2 polynomails write poly1+poly2\n\
-		To multiply 2 polynomails write poly1*poly2";
+		To add 2 polynomails write [poly1]+[poly2]\n\
+		To multiply 2 polynomails write [poly1]*[poly2]\n\
+		To evaluate the polinomial write eval[poly]num\n\
+		To get rational roots of a polinomial write roots[poly]\n";
 	}
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:text
 															 delegate:self
@@ -181,7 +183,7 @@
 			[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"char"]];
 			[A initNewMatrixWithString: ms_input];
 			[ms_Res appendFormat:@"%@\n",[A toString]];
-			[ms_Res appendFormat:@"char = %@",[A CharacteristicPolynomailToString]];
+			[ms_Res appendFormat:@"char = %@",[A CharacteristicPolynomailandEigenvaluesToString]];
 	}else {
 		NSArray *chunks = [minput.text componentsSeparatedByString: @"*"];
 		if([chunks count] == 2){/*it was multiplication*/
@@ -218,30 +220,56 @@
 	Polynom* q = [Polynom alloc];
 	Polynom* res = [Polynom alloc];
 	BOOL bIsMulti = false;
+	float f_value;
+	NSMutableString *ms_input = [NSMutableString stringWithString:minput.text];
 	NSMutableString* ms_Res = [NSMutableString stringWithString:@"original input:\n"];
 	NSMutableString *mutableString;
-	NSArray *chunks = [minput.text componentsSeparatedByString: @"["];
-	if([chunks count] == 3){/*2 polynomails operation*/
-		mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:1]];
-		if ([[chunks objectAtIndex:1]hasSuffix:@"*"]) {/*multiplication*/
-			[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]*"]];
-			bIsMulti = true;
-		}else if([[chunks objectAtIndex:1]hasSuffix:@"+"]){
-			[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]+"]];
+	if (YES == [minput.text hasPrefix:@"eval"]) {
+		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"eval["]];
+		NSArray *chunks = [ms_input componentsSeparatedByString: @"]"];
+		f_value = [[chunks objectAtIndex:1] floatValue];
+		[p initNewPolinomWithString: [chunks objectAtIndex:0]];
+		[ms_Res appendFormat:@"value of %@ at x = %f is %f\n",[p toString],f_value
+															,[p getValue:f_value]];
+	}else if(YES == [minput.text hasPrefix:@"roots"]){
+		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"roots["]];
+		NSArray *chunks = [ms_input componentsSeparatedByString: @"]"];
+		NSMutableString* mutStr = [[NSMutableString alloc] init];
+		[p initNewPolinomWithString: [chunks objectAtIndex:0]];
+		float* roots;
+		[p getRationalRoots :&roots];
+		int i;
+		for (i = 1; i<= roots[0]; i++) {
+			NSLog(@"root %i = %0.3f\n",i,roots[i]);
+			[mutStr appendFormat:@"root %i = %0.3f\n",i,roots[i]];
 		}
-		[p initNewPolinomWithString:mutableString];
+		[ms_Res appendFormat:@"%@\n%@",[p toString],mutStr];
+		[mutStr release];
+	}else{
+		/*for operations with no prefix*/
+		NSArray *chunks = [minput.text componentsSeparatedByString: @"["];
+		if([chunks count] == 3){/*2 polynomails operation*/
+			mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:1]];
+			if ([[chunks objectAtIndex:1]hasSuffix:@"*"]) {/*multiplication*/
+				[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]*"]];
+				bIsMulti = true;
+			}else if([[chunks objectAtIndex:1]hasSuffix:@"+"]){
+				[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]+"]];
+			}
+			[p initNewPolinomWithString:mutableString];
+			mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:2]];
+			[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]"]];
+			[q initNewPolinomWithString:mutableString];
+			if (bIsMulti) {
+				[Polynom multiply:p :q :res];
+				[ms_Res appendFormat:@"%@*%@= \n",[p toString],[q toString]];
+			}else {
+				[Polynom add:p :q :res];
+				[ms_Res appendFormat:@"%@+%@= \n",[p toString],[q toString]];
+			}
+			[ms_Res appendFormat:@"%@",[res toString]];
+		}
 	}
-	mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:2]];
-	[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]"]];
-	[q initNewPolinomWithString:mutableString];
-	if (bIsMulti) {
-		[Polynom multiply:p :q :res];
-		[ms_Res appendFormat:@"%@*%@= \n",[p toString],[q toString]];
-	}else {
-		[Polynom add:p :q :res];
-		[ms_Res appendFormat:@"%@+%@= \n",[p toString],[q toString]];
-	}
-	[ms_Res appendFormat:@"%@",[res toString]];
 
 	[p release];
 	[q release];
