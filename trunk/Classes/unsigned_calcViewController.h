@@ -12,6 +12,7 @@ typedef enum
 	not_set,
 	matrix,
 	polynom,
+	vector,
 }calculator_state;
 
 @interface unsigned_calcViewController : UIViewController {
@@ -34,9 +35,11 @@ typedef enum
 -(BOOL)textFieldShouldReturn:(UITextField *)theTextField;
 -(void) parseMatrixInput;
 -(void) parsePolynomInput;
+-(void) parseVectorInput;
 -(void)getResult;
 -(void) doMatrix;
 -(void) doPolynom;
+-(void) doVector;
 
 @end
 
