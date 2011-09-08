@@ -9,6 +9,7 @@
 #import "unsigned_calcViewController.h"
 #import "calc_engine/Matrix.h"
 #import "calc_engine/Polynom.h"
+#import "calc_engine/Vector.h"
 
 @implementation unsigned_calcViewController
 
@@ -51,7 +52,7 @@
 															 delegate:self
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
-													otherButtonTitles:@"Do stuff with Matrix",@"Do stuff with polynom",nil];
+													otherButtonTitles:@"Do stuff with Matrix",@"Do stuff with polynomials",@"Do stuff with Vectors",nil];
 	actionSheet.tag = 10;
 	actionSheet.actionSheetStyle = UIActionSheetStyleDefault;
     [actionSheet showInView:self.view]; // show from our table view (pops up in the middle of the table)
@@ -77,6 +78,10 @@
 		To multiply 2 polynomails write [poly1]*[poly2]\n\
 		To evaluate the polinomial write eval[poly]num\n\
 		To get rational roots of a polinomial write roots[poly]\n";
+	}else if (vector == m_state) {
+		text = @"To add 2 vectors write [vec1]+[vec2]\n\
+		To get inner product of 2 vectors write <[vec1];[vec2]>\n\
+		To multiply a vector with a constant write [vec]*const\n";
 	}
 	UIActionSheet *actionSheet = [[UIActionSheet alloc] initWithTitle:text
 															 delegate:self
@@ -94,7 +99,7 @@
 															 delegate:self
 													cancelButtonTitle:nil 
 											   destructiveButtonTitle:nil 
-													otherButtonTitles:@"Do stuff with Matrix",@"Do stuff with polynom",nil];
+													otherButtonTitles:@"Do stuff with Matrix",@"Do stuff with Polynomials",@"Do stuff with Vectors",nil];
 	minput.text = @"";  
 	mlResult.text = @"";
 	actionSheet.tag = 10;
@@ -108,6 +113,7 @@
 /*
  0 = matrix
  1 = polynom
+ 2 = vector
  
  */
 -(void) actionSheet:(UIActionSheet*)actionSheet clickedButtonAtIndex:(NSInteger) buttonIndex{
@@ -123,6 +129,10 @@
 			case 1:
 				m_state = polynom;
 				[self doPolynom];
+				break;
+			case 2:
+				m_state = vector;
+				[self doVector];
 				break;
 			default:
 				break;
@@ -145,6 +155,8 @@
 		[self parseMatrixInput];
 	}else if (polynom == m_state) {
 		[self parsePolynomInput];
+	}else if (vector == m_state) {
+		[self parseVectorInput];
 	}
 }
 
@@ -277,11 +289,55 @@
 	mlResult.text = ms_Res;
 }
 
+-(void) parseVectorInput{
+	Vector* v = [Vector alloc];
+	Vector* u = [Vector alloc];
+	Vector* res = [Vector alloc];
+	double dTemp;
+	NSMutableString* ms_Res = [NSMutableString stringWithString:@"original input:\n"];
+
+	if (YES == [minput.text hasPrefix:@"<"]) {/*this is inner product*/
+		NSMutableString *mutableString = [NSMutableString stringWithString:minput.text];
+		[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"<"]];
+		[mutableString deleteCharactersInRange:[mutableString rangeOfString: @">"]];
+		NSArray *chunks = [mutableString componentsSeparatedByString: @";"];
+		[v initNewVectorWithSring:[chunks objectAtIndex:0]];
+		[u initNewVectorWithSring:[chunks objectAtIndex:1]];
+		dTemp = [Vector inner_prod:v :u];
+		[ms_Res appendFormat:@"<%@,%@> = %0.3f\n",[v toString],[u toString],dTemp];
+	}else {
+		NSArray *chunks = [minput.text componentsSeparatedByString: @"*"];
+		if([chunks count] == 2){/*it was multiplication*/
+			[v initNewVectorWithSring:[chunks objectAtIndex:0]];
+			dTemp = [[chunks objectAtIndex:1] doubleValue];
+			[Vector multiply:v :dTemp :u];
+			[ms_Res appendFormat:@"%0.3f*%@= \n",dTemp,[v toString]];
+			[ms_Res appendFormat:@"%@",[u toString]];
+		}else {/*it's + */
+			chunks = [minput.text componentsSeparatedByString: @"+"];
+			[v initNewVectorWithSring:[chunks objectAtIndex:0]];
+			[u initNewVectorWithSring:[chunks objectAtIndex:1]];
+			[Vector add:v :u :res];
+			[ms_Res appendFormat:@"%@+\n%@= \n",[v toString],[u toString]];
+			[ms_Res appendFormat:@"%@",[res toString]];
+		}
+	}
+
+	[v release];
+	[u release];
+	mlResult.text = ms_Res;
+}
+
 -(void) doMatrix{
 	mlabel.text = @"matrix input example\n[1 2 3;4 5 6;7 8 9]";
 }
+
 -(void) doPolynom{
-	mlabel.text = @"polynom input example\nx^2+7x^1+-3x^0";
+	mlabel.text = @"polynom input example\n[x^2+7x^1+-3x^0]";
+}
+
+-(void) doVector{
+	mlabel.text = @"vector input example\n[v1,v2,...,vn]";
 }
 
 /*
