@@ -142,9 +142,23 @@
 	return res;
 }
 /**********************************************************************************************/
+/*returns 0 if no such line exists, othewise return the first k>i such that mat[k][j]!=0*/
+-(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size{
+	int iLine;
+	for (iLine = i; iLine < size; iLine++) {
+		NSLog(@"[%i][%i] = %0.3f",iLine,j,fMat[iLine][j]);
+		if(fMat[iLine][j]!= 0){
+			return iLine;
+		}
+	}
+	return 0;
+}
+/**********************************************************************************************/
+
 -(void) triagonalizeAndInverse{
-	int i,j,k;
+	int i,j,k,line;
 	float fTemp,fInvTemp, fCurMult;
+	float* tempLine;
 	m_aTriangMat = (float **)malloc(m_iSize * sizeof(float*));
 	m_aInvMat = (float **)malloc(m_iSize * sizeof(float*));
 	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
@@ -155,18 +169,28 @@
 			m_aInvMat[i][k] = 0;
 		}
 		m_aInvMat[i][i] = 1;
-		if(0 != i) {
-			for (j = 0; j < i; j++) { /*for each line we already*/
-				/*TODO*/
-				if (m_aTriangMat[j][j] != 0) { /*otherwise there's a problem*/
-					fCurMult = m_aTriangMat[i][j]/m_aTriangMat[j][j];
-					for (k = 0; k < m_iSize; k++) { /*multiply every element andreduce it*/
-						fTemp = m_aTriangMat[i][k] - fCurMult*m_aTriangMat[j][k];
-						fInvTemp = m_aInvMat[i][k] - fCurMult*m_aInvMat[j][k];
-						m_aTriangMat[i][k] = fTemp;
-						m_aInvMat[i][k] = fInvTemp;
-					}
+	}
+	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
+		for (j = 0; j < i; j++) {
+			if (m_aTriangMat[j][j] != 0) { /*otherwise there's a problem*/
+				fCurMult = m_aTriangMat[i][j]/m_aTriangMat[j][j];
+				for (k = 0; k < m_iSize; k++) { /*multiply every element and reduce it*/
+					fTemp = m_aTriangMat[i][k] - fCurMult*m_aTriangMat[j][k];
+					fInvTemp = m_aInvMat[i][k] - fCurMult*m_aInvMat[j][k];
+					m_aTriangMat[i][k] = fTemp;
+					m_aInvMat[i][k] = fInvTemp;
 				}
+			}else{
+				line = [self findFirstNonZeroEntry:j:j:m_aTriangMat:m_iSize];
+				if(line != 0){/*switch lines and re-do it*/
+					tempLine = m_aTriangMat[j];
+					m_aTriangMat[j] = m_aTriangMat[line];
+					m_aTriangMat[line] = tempLine;
+					tempLine = m_aInvMat[j];
+					m_aInvMat[j] = m_aInvMat[line];
+					m_aInvMat[line] = tempLine;
+					j--;
+				}/*otherwise there's nothing to do*/
 			}
 		}
 	}
@@ -190,8 +214,7 @@
 	/*finish diagonalizing for inverse if det != 0*/
 	for (i = m_iSize -1 ; i >= 0; i--) { /*go over the lines*/
 		if(m_iSize-1 != i) {
-			for (j = m_iSize-1; j > i; j--) { /*for each line we already*/
-				/*TODO*/
+			for (j = m_iSize-1; j > i; j--) {
 				if (mDiag[j][j] != 0) { /*otherwise there's a problem*/
 					fCurMult = mDiag[i][j]/mDiag[j][j];
 					for (k = 0; k < m_iSize; k++) { /*multiply every element andreduce it*/
@@ -200,17 +223,34 @@
 						mDiag[i][k] = fTemp;
 						m_aInvMat[i][k] = fInvTemp;
 					}
+				}else {
+					line = [self findFirstNonZeroEntry:j:j:mDiag:m_iSize];
+					if(line != 0){/*switch lines and re-do it*/
+						tempLine = mDiag[j];
+						mDiag[j] = mDiag[line];
+						mDiag[line] = tempLine;
+						tempLine = m_aInvMat[j];
+						m_aInvMat[j] = m_aInvMat[line];
+						m_aInvMat[line] = tempLine;
+						j--;
+					}/*otherwise matrix is not invertible!!!*/
+				}
+
+			}
+		}
+		/*just in case to prevent crushing*/
+		if(0 != mDiag[i][i]){
+			if(1 != mDiag[i][i]){
+				fCurMult = 1.0/mDiag[i][i];
+				for (k = 0; k < m_iSize; k++) {
+					mDiag[i][k] *= fCurMult;
+					m_aInvMat[i][k] *= fCurMult;
 				}
 			}
+		}else {
+			NSLog(@"Issue with matrix!!!");
 		}
-		/*TODO*/
-		if(0 != mDiag[i][i] && 1 != mDiag[i][i]){
-			fCurMult = 1.0/mDiag[i][i];
-			for (k = 0; k < m_iSize; k++) {
-				mDiag[i][k] *= fCurMult;
-				m_aInvMat[i][k] *= fCurMult;
-			}
-		}
+
 	}
 	
 	for (i = 0; i < m_iSize; i++) {
