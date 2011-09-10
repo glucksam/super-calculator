@@ -7,6 +7,7 @@
 //
 
 #import "Vector.h"
+#import "VectorSpace.h"
 
 
 @implementation Vector
@@ -73,6 +74,12 @@
 	[ms_res release];
 }
 /**********************************************************************************************/
+-(void) clean{
+	m_iNumOfElements = 0;
+	free(m_dElements);
+	m_dElements = nil;
+}
+/**********************************************************************************************/
 -(double) getElement:(int)index{
 	if(index > m_iNumOfElements){
 		return 0;
@@ -93,7 +100,6 @@
 	int i;
 	for(i = 0;i<count; i++) {
 		value = va_arg(args, double);
-		NSLog(@"now geting %f\n", value);
 		m_dElements[i] = value;
 	}
 	va_end(args);
@@ -119,8 +125,57 @@
 /**********************************************************************************************/
 -(void) dealloc {
     NSLog(@"Deallocing Vector\n" );
-	free(m_dElements);
+	if (m_dElements!= nil) {
+		free(m_dElements);
+	}
 	[super dealloc];
 }
+/**********************************************************************************************/
+/*+(void) testVectorTest{
+	int i_subspace_rank = 4;
+	int i_space_rank = 4;
+	Vector** vBasis = (Vector**)malloc(i_subspace_rank * sizeof(Vector*));
+	vBasis[0] = [Vector alloc];
+	[vBasis[0] initNewVectorWithSring:@"[1,2,0,0]"];
+	vBasis[1] = [Vector alloc];
+	[vBasis[1] initNewVectorWithSring:@"[1,0,1,0]"];
+	vBasis[2] = [Vector alloc];
+	[vBasis[2] initNewVectorWithSring:@"[1,0,0,0]"];
+	vBasis[3] = [Vector alloc];
+	[vBasis[3] initNewVectorWithSring:@"[0,0,0,1]"];
+	Vector** uBasis = (Vector**)malloc(i_subspace_rank * sizeof(Vector*));
+	uBasis[0] = [Vector alloc];
+	[uBasis[0] initNewVectorWithSring:@"[1,0,0,0]"];
+	uBasis[1] = [Vector alloc];
+	[uBasis[1] initNewVectorWithSring:@"[0,1,0,0]"];
+	uBasis[2] = [Vector alloc];
+	[uBasis[2] initNewVectorWithSring:@"[0,0,1,0]"];
+	uBasis[3] = [Vector alloc];
+	[uBasis[3] initNewVectorWithSring:@"[0,0,0,1]"];
+	VectorSpace* vSpace = [VectorSpace alloc];
+	[vSpace initVectorSpace:i_space_rank :i_subspace_rank :vBasis];
+	VectorSpace* uSpace = [VectorSpace alloc];
+	[uSpace initVectorSpace:i_space_rank :i_subspace_rank :uBasis];
 
+	if ([VectorSpace isEqual:vSpace	:uSpace]) {
+		NSLog(@"Vector spaces are equal!!!");
+	}else {
+		NSLog(@"Vector space are NOT equal!!!");
+	}
+
+	Vector* v = [Vector alloc];
+	[v initNewVectorWithSring:@"[1,2,2,0]"];
+	if ([vSpace isInSpace:v]) {
+		NSLog(@"Vector in space!!!");
+	}else {
+		NSLog(@"Vector is NOT in space!!!");
+	}
+
+	for(int i = 0;i<i_subspace_rank; i++) {
+		[vBasis[i] release];
+	}
+	free(vBasis);
+	NSLog(@"%@",[vSpace toString]);
+	[vSpace release];
+}*/
 @end
