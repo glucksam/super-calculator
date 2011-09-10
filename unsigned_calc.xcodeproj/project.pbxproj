@@ -19,6 +19,9 @@
 		36068F9813D97DB600EF1936 /* Matrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 36068F9413D97DB600EF1936 /* Matrix.m */; };
 		36068F9913D97DB600EF1936 /* Polynom.m in Sources */ = {isa = PBXBuildFile; fileRef = 36068F9613D97DB600EF1936 /* Polynom.m */; };
 		366C6DA2140E8EDA00483878 /* polymatrix.m in Sources */ = {isa = PBXBuildFile; fileRef = 366C6DA1140E8EDA00483878 /* polymatrix.m */; };
+		366C714F14111C1A00483878 /* Operations.m in Sources */ = {isa = PBXBuildFile; fileRef = 366C714E14111C1A00483878 /* Operations.m */; };
+		366C74C41418E38900483878 /* Vector.m in Sources */ = {isa = PBXBuildFile; fileRef = 366C74C31418E38900483878 /* Vector.m */; };
+		366C769F141B603400483878 /* VectorSpace.m in Sources */ = {isa = PBXBuildFile; fileRef = 366C769E141B603400483878 /* VectorSpace.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,12 @@
 		36068F9613D97DB600EF1936 /* Polynom.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Polynom.m; sourceTree = "<group>"; };
 		366C6DA0140E8EDA00483878 /* polymatrix.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = polymatrix.h; sourceTree = "<group>"; };
 		366C6DA1140E8EDA00483878 /* polymatrix.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = polymatrix.m; sourceTree = "<group>"; };
+		366C714D14111C1A00483878 /* Operations.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Operations.h; sourceTree = "<group>"; };
+		366C714E14111C1A00483878 /* Operations.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Operations.m; sourceTree = "<group>"; };
+		366C74C21418E38900483878 /* Vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Vector.h; sourceTree = "<group>"; };
+		366C74C31418E38900483878 /* Vector.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Vector.m; sourceTree = "<group>"; };
+		366C769D141B603400483878 /* VectorSpace.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VectorSpace.h; sourceTree = "<group>"; };
+		366C769E141B603400483878 /* VectorSpace.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VectorSpace.m; sourceTree = "<group>"; };
 		8D1107310486CEB800E47090 /* unsigned_calc-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "unsigned_calc-Info.plist"; plistStructureDefinitionIdentifier = "com.apple.xcode.plist.structure-definition.iphone.info-plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -131,6 +140,12 @@
 				36068F9613D97DB600EF1936 /* Polynom.m */,
 				366C6DA0140E8EDA00483878 /* polymatrix.h */,
 				366C6DA1140E8EDA00483878 /* polymatrix.m */,
+				366C714D14111C1A00483878 /* Operations.h */,
+				366C714E14111C1A00483878 /* Operations.m */,
+				366C74C21418E38900483878 /* Vector.h */,
+				366C74C31418E38900483878 /* Vector.m */,
+				366C769D141B603400483878 /* VectorSpace.h */,
+				366C769E141B603400483878 /* VectorSpace.m */,
 			);
 			path = calc_engine;
 			sourceTree = "<group>";
@@ -203,6 +218,9 @@
 				36068F9813D97DB600EF1936 /* Matrix.m in Sources */,
 				36068F9913D97DB600EF1936 /* Polynom.m in Sources */,
 				366C6DA2140E8EDA00483878 /* polymatrix.m in Sources */,
+				366C714F14111C1A00483878 /* Operations.m in Sources */,
+				366C74C41418E38900483878 /* Vector.m in Sources */,
+				366C769F141B603400483878 /* VectorSpace.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
