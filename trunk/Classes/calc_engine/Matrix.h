@@ -15,6 +15,7 @@
 	float** m_aTriangMat;
 	float** m_aInvMat;
 	Polynom* m_pCharPol;
+	float* m_fEigenValues;
 	int m_iSize;
 	float m_fdet;
 	float m_fTrace;
@@ -30,7 +31,9 @@
 -(void) set:(int)i:(int)j:(float)val;
 -(float) calcAdj:(int)i:(int)j;
 -(void) triagonalizeAndInverse;
--(void) getCharacteristicPolynomail;
+-(void) getCharacteristicPolynomailAndEigenvalues;
+-(BOOL) isZeroLineInTriangMat:(int) index;
+-(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;
 -(void) initNewMatrix:(int) size;
@@ -39,11 +42,13 @@
 -(void) adjMat:(Matrix*)adj;
 -(NSString*) triagonalMatrixToString;
 -(NSString*) inverseMatrixToString;
--(NSString*) CharacteristicPolynomailToString;
+-(NSString*) CharacteristicPolynomailandEigenvaluesToString;
+-(int) getMatrixRank;
 /*static*/  
 +(bool) compare:(Matrix*) A: (Matrix*) B;
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
 +(void) multiply:(float) constant: (Matrix*) A: (Matrix*) mRes;
 +(void) addMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
++(void) getEigenSpace:(Matrix*)A:(float) eigenValue;/*add return vector space*/
 
 @end
