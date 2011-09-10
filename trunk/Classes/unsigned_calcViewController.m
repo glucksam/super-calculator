@@ -325,6 +325,7 @@
 
 	[v release];
 	[u release];
+	[res release];
 	mlResult.text = ms_Res;
 }
 

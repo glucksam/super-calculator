@@ -17,7 +17,6 @@
 /*public functions*/
 -(NSString*) toString;
 -(NSString*) getObjName;
--(NSString*) vecToString:(int*) vec:(int)size;
 /*private functions*/
 -(void) setObjName:(NSString*) i_sName;
 

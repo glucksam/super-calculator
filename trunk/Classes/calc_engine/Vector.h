@@ -19,8 +19,10 @@
 -(void)initNewVector:(int) count, ...;
 -(void)initNewVectorWithSring:(NSString*) input;
 -(double) getElement:(int)index;
+-(void) clean;
 /*static functions*/
 +(void) add:(Vector*) v:(Vector*) u:(Vector*)res;
 +(double) inner_prod:(Vector*) v:(Vector*) u;
 +(void) multiply:(Vector*) v:(double) con:(Vector*)res;
+//+(void) testVectorTest;
 @end
