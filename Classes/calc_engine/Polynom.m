@@ -57,6 +57,63 @@
 	}
 	[pSum initNewPolinomWithCoeffs:deg :coeffs];
 	free(coeffs);
+	[pSum resetRank];
+}
+/**********************************************************************************************/
++(bool) compare:(Polynom*) p:(Polynom*) q{
+	Polynom* temp = [Polynom alloc];
+	Polynom* pCompare = [Polynom alloc];
+	[Polynom constMultiply:q :(-1) :temp];
+	[Polynom add:p :temp :pCompare];
+	if ([pCompare isZeroPoly]) {
+		return true;
+	}else {
+		return false;
+	}
+}
+/**********************************************************************************************/
++(bool) verifyDivide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residu{
+	Polynom* multRes = [Polynom alloc];
+	Polynom* calcRes = [Polynom alloc];
+	[Polynom multiply:q :result :multRes];
+	[Polynom add:multRes :residu :calcRes];
+	bool res = false;
+	if ([Polynom compare:p :calcRes]) {
+		res = true;
+	}
+	[calcRes release];
+	[multRes release];
+	return res;
+}
+/**********************************************************************************************/
++(void) divide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residue{
+	Polynom *tempLeft = [Polynom alloc];
+	Polynom *tempAdd = [Polynom alloc];
+	Polynom *tempCalc = [Polynom alloc];
+	NSMutableString *polyTempStr = [[NSMutableString alloc]initWithString:@""];
+	[tempLeft initNewPolinomWithString:[p toStringForInit]];
+	[result initNewPolinomWithString:@"0x^0"];
+	while ([tempLeft getRank]>=[q getRank]) {
+		/*keep going and each time add to result polynom*/
+		[polyTempStr appendFormat:@"%fx^%d",
+				   [tempLeft getCoefficiant:[tempLeft getRank]]/[q getCoefficiant:[q getRank]],
+				   [tempLeft getRank]-[q getRank]];
+		[tempAdd initNewPolinomWithString:polyTempStr];
+		[Polynom constMultiply:tempAdd :(-1) :tempCalc];
+		[Polynom multiply:tempCalc :q :tempCalc];
+		[Polynom add:tempLeft :tempCalc :tempLeft];
+		[Polynom add:result :tempAdd :result];
+		[polyTempStr setString:@""];
+	}
+	[residue initNewPolinomWithString:[tempLeft toStringForInit]];
+	[tempLeft release];
+	[tempAdd release];
+	[tempCalc release];
+	if ([Polynom verifyDivide:p :q :result :residue]) {
+		NSLog(@"Success: result %@, residue %@",[result toString],[residue toString]);
+	}else {
+		NSLog(@"faliure: result %@, residue %@",[result toString],[residue toString]);
+	}
 }
 /**********************************************************************************************/
 -(bool) isZeroPoly{
@@ -66,6 +123,19 @@
 			return false;
 	}
 	return true;
+}
+/**********************************************************************************************/
+-(void) resetRank{
+	int i;
+	int iTemp = m_iRank;
+	for (i = m_iRank; i>=0; i--) {
+		if(m_fCoefficients[i] == 0)
+			iTemp--;
+		else {
+			break;
+		}
+	}
+	m_iRank = iTemp;
 }
 /**********************************************************************************************/
 /*
@@ -150,7 +220,7 @@
 		}else {
 			[print appendFormat:@" + "];
 		}
-
+		
 		if(0 == i){
 			[print appendFormat:@"%.3f", m_fCoefficients[i]];
 			continue;
@@ -162,6 +232,25 @@
 		}
 	}
 	[print appendFormat:@"]"];
+	NSString* res = [NSString stringWithString: print];
+	[print release];
+	return res;
+}
+/**********************************************************************************************/
+-(NSString*) toStringForInit{
+	int i;
+	NSMutableString *print = [[NSMutableString alloc]initWithString:@""];
+	bool bIsFirst = true;
+	for(i = 0; i <= m_iRank ; i++){
+		if(m_iRank != 0 && m_fCoefficients[i] == 0)
+			continue;
+		if(bIsFirst){
+			bIsFirst = false;
+		}else {
+			[print appendFormat:@"+"];
+		}
+		[print appendFormat:@"%.3fx^%d", m_fCoefficients[i],i];
+	}
 	NSString* res = [NSString stringWithString: print];
 	[print release];
 	return res;
