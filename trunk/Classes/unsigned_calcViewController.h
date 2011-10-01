@@ -15,6 +15,14 @@ typedef enum
 	vector,
 }calculator_state;
 
+typedef enum
+{
+	plus,
+	minus,
+	multiply,
+	divide,
+}operation;
+
 @interface unsigned_calcViewController : UIViewController {
 	calculator_state m_state;
 	IBOutlet UILabel *mlabel;

@@ -29,9 +29,14 @@
 -(bool) isZeroPoly;
 -(bool) isRoot:(float)x;
 -(void) getRationalRoots:(float**)roots;
+-(void) resetRank;
+-(NSString*) toStringForInit;
+-(NSString*) toString;
 /*static functions*/
 +(void) initCoefficiant:(float**) coef: (int) size;
 +(void) constMultiply:(Polynom*) p:(float) constant:(Polynom*) pRes;
 +(void) multiply:(Polynom*) p:(Polynom*) q:(Polynom*) prod;
 +(void) add:(Polynom*) p:(Polynom*) q:(Polynom*) pSum;
++(void) divide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residue;
++(bool) compare:(Polynom*) p:(Polynom*) q;
 @end

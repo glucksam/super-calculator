@@ -77,7 +77,8 @@
 		To add 2 polynomails write [poly1]+[poly2]\n\
 		To multiply 2 polynomails write [poly1]*[poly2]\n\
 		To evaluate the polinomial write eval[poly]num\n\
-		To get rational roots of a polinomial write roots[poly]\n";
+		To get rational roots of a polinomial write roots[poly]\n\
+		To divide 2 polynomials write [poly1]/[poly2]\n";
 	}else if (vector == m_state) {
 		text = @"To add 2 vectors write [vec1]+[vec2]\n\
 		To get inner product of 2 vectors write <[vec1];[vec2]>\n\
@@ -231,7 +232,8 @@
 	Polynom* p = [Polynom alloc];
 	Polynom* q = [Polynom alloc];
 	Polynom* res = [Polynom alloc];
-	BOOL bIsMulti = false;
+	Polynom* residue = [Polynom alloc];
+	operation op;
 	float f_value;
 	NSMutableString *ms_input = [NSMutableString stringWithString:minput.text];
 	NSMutableString* ms_Res = [NSMutableString stringWithString:@"original input:\n"];
@@ -264,28 +266,42 @@
 			mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:1]];
 			if ([[chunks objectAtIndex:1]hasSuffix:@"*"]) {/*multiplication*/
 				[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]*"]];
-				bIsMulti = true;
+				op = multiply;
 			}else if([[chunks objectAtIndex:1]hasSuffix:@"+"]){
 				[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]+"]];
+				op = plus;
+			}else if([[chunks objectAtIndex:1]hasSuffix:@"/"]){
+				[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]/"]];
+				op = divide;
 			}
 			[p initNewPolinomWithString:mutableString];
 			mutableString = [NSMutableString stringWithString:[chunks objectAtIndex:2]];
 			[mutableString deleteCharactersInRange:[mutableString rangeOfString: @"]"]];
 			[q initNewPolinomWithString:mutableString];
-			if (bIsMulti) {
-				[Polynom multiply:p :q :res];
-				[ms_Res appendFormat:@"%@*%@= \n",[p toString],[q toString]];
-			}else {
-				[Polynom add:p :q :res];
-				[ms_Res appendFormat:@"%@+%@= \n",[p toString],[q toString]];
+			switch (op) {
+				case multiply:
+					[Polynom multiply:p :q :res];
+					[ms_Res appendFormat:@"%@*%@= %@\n",[p toString],[q toString],[res toString]];
+					break;
+				case plus:
+					[Polynom add:p :q :res];
+					[ms_Res appendFormat:@"%@+%@= %@\n",[p toString],[q toString],[res toString]];
+					break;
+				case divide:
+					[Polynom divide:p :q :res:residue];
+					[ms_Res appendFormat:@"%@/%@= %@ with residue %@\n",
+					 [p toString],[q toString],[res toString],[residue toString]];
+					break;
+				default:
+					break;
 			}
-			[ms_Res appendFormat:@"%@",[res toString]];
 		}
 	}
 
 	[p release];
 	[q release];
 	[res release];
+	[residue release];
 	mlResult.text = ms_Res;
 }
 
@@ -334,7 +350,7 @@
 }
 
 -(void) doPolynom{
-	mlabel.text = @"polynom input example\n[x^2+7x^1+-3x^0]";
+	mlabel.text = @"polynom input example\n[1x^2+7x^1+-3x^0]";
 }
 
 -(void) doVector{
