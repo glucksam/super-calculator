@@ -20,6 +20,7 @@
 -(void)initNewVectorWithSring:(NSString*) input;
 -(double) getElement:(int)index;
 -(void) clean;
+-(double) getNorm;
 /*static functions*/
 +(void) add:(Vector*) v:(Vector*) u:(Vector*)res;
 +(double) inner_prod:(Vector*) v:(Vector*) u;

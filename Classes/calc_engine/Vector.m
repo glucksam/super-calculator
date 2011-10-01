@@ -74,6 +74,11 @@
 	[ms_res release];
 }
 /**********************************************************************************************/
+-(double) getNorm{
+	double dNorm = [Vector inner_prod:self :self];
+	return sqrt(dNorm);
+}
+/**********************************************************************************************/
 -(void) clean{
 	m_iNumOfElements = 0;
 	free(m_dElements);
