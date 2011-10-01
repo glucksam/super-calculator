@@ -34,6 +34,8 @@
 -(void) getCharacteristicPolynomailAndEigenvalues;
 -(BOOL) isZeroLineInTriangMat:(int) index;
 -(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size;
+//-(NSString*) EigenSpaceToString:(float)fEigenValue;
+//-(void)createEigenTransformationMatrix:(float)fEigenValue:(float***)fMatrix;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;
 -(void) initNewMatrix:(int) size;
@@ -49,6 +51,5 @@
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
 +(void) multiply:(float) constant: (Matrix*) A: (Matrix*) mRes;
 +(void) addMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
-+(void) getEigenSpace:(Matrix*)A:(float) eigenValue;/*add return vector space*/
 
 @end

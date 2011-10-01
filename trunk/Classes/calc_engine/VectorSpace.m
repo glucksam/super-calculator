@@ -125,6 +125,7 @@
 	int i,iRank;
 	int iSpaceRank = vector_list[0].m_iNumOfElements;
 	if (iSpaceRank < num_of_vectors) {
+		[sMat release];
 		return FALSE;
 	}
 	bool bIsFirst = true;

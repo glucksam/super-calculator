@@ -83,8 +83,8 @@
 		if (!([Operations isInArray:*roots :0])) {
 			(*roots)[(int)((*roots)[0])+1] = 0;
 			(*roots)[0] = (*roots)[0]+1;
-			[p release];
 		}
+		[p release];
 		return;
 	}
 	[Operations getFactors:abs(m_fCoefficients[0]):&a_factors];

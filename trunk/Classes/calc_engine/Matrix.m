@@ -9,6 +9,7 @@
 #import "MathObject.h"
 #import "Matrix.h"
 #import "polymatrix.h"
+#import "Operations.h"
 
 
 @implementation Matrix
@@ -59,7 +60,6 @@
 	return true;
 }
 /**********************************************************************************************/
-
 +(void) addMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes{
 	int i,j;
 	int size = A.m_iSize;
@@ -135,6 +135,7 @@
 	int i;
 	for (i = 1; i<= m_fEigenValues[0]; i++) {
 		NSLog(@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]);
+		/*[self EigenSpaceToString:m_fEigenValues[i]];*/
 		[mutStr appendFormat:@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]];
 	}
 	NSString* res = [NSString stringWithString: mutStr];
@@ -146,7 +147,6 @@
 -(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size{
 	int iLine;
 	for (iLine = i; iLine < size; iLine++) {
-		NSLog(@"[%i][%i] = %0.3f",iLine,j,fMat[iLine][j]);
 		if(fMat[iLine][j]!= 0){
 			return iLine;
 		}
@@ -154,7 +154,6 @@
 	return 0;
 }
 /**********************************************************************************************/
-
 -(void) triagonalizeAndInverse{
 	int i,j,k,line;
 	float fTemp,fInvTemp, fCurMult;
@@ -235,7 +234,6 @@
 						j--;
 					}/*otherwise matrix is not invertible!!!*/
 				}
-
 			}
 		}
 		/*just in case to prevent crushing*/
@@ -250,7 +248,6 @@
 		}else {
 			NSLog(@"Issue with matrix!!!");
 		}
-
 	}
 	
 	for (i = 0; i < m_iSize; i++) {
@@ -267,6 +264,33 @@
 	[p release];
 	NSLog(@"characteristic polynomial = %@", [m_pCharPol toString]);
 	[m_pCharPol getRationalRoots:&m_fEigenValues];
+}
+/**********************************************************************************************/
+/*-(void)createEigenTransformationMatrix:(float)fEigenValue:(float***)fMatrix{
+	int i,j;
+	(*fMatrix) = (float **)malloc(m_iSize * sizeof(float*));
+	for (i = 0; i < m_iSize; i++) {
+		(*fMatrix)[i] = (float *)malloc(m_iSize * sizeof(float));
+		for (j = 0; j < m_iSize; j++) {
+			if (i == j) {
+				(*fMatrix)[i][i] = m_aMatrix[i][i]-fEigenValue;
+			}else {
+				(*fMatrix)[i][j] = m_aMatrix[i][j];
+			}
+		}
+	}
+}
+/**********************************************************************************************/
+/*-(NSString*) EigenSpaceToString:(float)fEigenValue{
+	float** tempMat;
+	int i;
+	[self createEigenTransformationMatrix:fEigenValue:&tempMat];
+	[Operations printMatrixToLog:tempMat:m_iSize];
+	for (i = 0; i < m_iSize; i++) {
+		free(tempMat[i]);
+	}
+	free(tempMat);
+	return @"";
 }
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{

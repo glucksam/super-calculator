@@ -14,39 +14,6 @@
 const int NUM_OF_PRIMES = 30;
 const int Primes[30] = {2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 
 								53, 59, 61, 67, 71, 73, 79, 83, 89, 97, 101, 103, 107, 109, 113};
-static Operations* _instance = nil;
-
-+(Operations*)getInstance
-{
-	@synchronized([Operations class])
-	{
-		if (!_instance)
-			[[self alloc] init];
-		
-		return _instance;
-	}	
-	return nil;
-}
-
-+(id)alloc
-{
-	@synchronized([Operations class])
-	{
-		NSAssert(_instance == nil, @"Attempted to allocate a second instance of a singleton.");
-		_instance = [super alloc];
-		return _instance;
-	}
-	return nil;
-}
-
--(id)init {
-	self = [super init];
-	if (self != nil) {
-	}
-	
-	return self;
-}
-
 /**********************************************************************************************/
 +(bool) isPrime:(int)number{
 	int i;
@@ -116,6 +83,22 @@ static Operations* _instance = nil;
 		}
 	}
 	return false;
+}
+/**********************************************************************************************/
++(void) printMatrixToLog:(float**)mat:(int)size{
+	int i,j;
+	NSMutableString *print = [[NSMutableString alloc] init];
+	for(i = 0; i<size; i++){
+		NSMutableString *line =  [[NSMutableString alloc] init];
+		for(j = 0; j < size; j++){
+			[line appendFormat:@"%0.3f ", mat[i][j]];
+		}
+		[line appendFormat:@"\n"];
+		[print appendString:line];
+		[line release];
+	}
+	NSLog(@"\n%@",print);
+	[print release];
 }
 
 @end
