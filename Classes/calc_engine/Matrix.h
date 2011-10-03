@@ -12,13 +12,14 @@
 @interface Matrix : MathObject {
 	@private
 	float** m_aMatrix;
-	float** m_aTriangMat;
-	float** m_aInvMat;
+	Matrix* m_aTriangMat;
+	Matrix* m_aInvMat;
 	Polynom* m_pCharPol;
 	float* m_fEigenValues;
 	int m_iSize;
 	float m_fdet;
 	float m_fTrace;
+	bool m_bShouldCalculateInvTri;
 }
 @property (readonly) float m_fdet;
 @property (readonly) float m_fTrace;
@@ -34,8 +35,10 @@
 -(void) getCharacteristicPolynomailAndEigenvalues;
 -(BOOL) isZeroLineInTriangMat:(int) index;
 -(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size;
-//-(NSString*) EigenSpaceToString:(float)fEigenValue;
-//-(void)createEigenTransformationMatrix:(float)fEigenValue:(float***)fMatrix;
+-(NSString*) EigenSpaceToString:(float)fEigenValue;
+-(void)createEigenTransformationMatrix:(float)fEigenValue:(Matrix*)mat;
+-(void) doNotCalculateAdditionalMatrix;
+-(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;
 -(void) initNewMatrix:(int) size;
@@ -46,6 +49,7 @@
 -(NSString*) inverseMatrixToString;
 -(NSString*) CharacteristicPolynomailandEigenvaluesToString;
 -(int) getMatrixRank;
+-(void) getTridiagonalMatrix:(Matrix*)triMat;
 /*static*/  
 +(bool) compare:(Matrix*) A: (Matrix*) B;
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
