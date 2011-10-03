@@ -65,11 +65,13 @@
 	Polynom* pCompare = [Polynom alloc];
 	[Polynom constMultiply:q :(-1) :temp];
 	[Polynom add:p :temp :pCompare];
+	bool res = false;
 	if ([pCompare isZeroPoly]) {
-		return true;
-	}else {
-		return false;
+		res = true;
 	}
+	[temp release];
+	[pCompare release];
+	return res;
 }
 /**********************************************************************************************/
 +(bool) verifyDivide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residu{
@@ -109,6 +111,7 @@
 	[tempLeft release];
 	[tempAdd release];
 	[tempCalc release];
+	[polyTempStr release];
 	if ([Polynom verifyDivide:p :q :result :residue]) {
 		NSLog(@"Success: result %@, residue %@",[result toString],[residue toString]);
 	}else {
