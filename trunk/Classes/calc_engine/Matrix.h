@@ -31,14 +31,15 @@
 -(void) set:(int)i:(int)j:(float)val;
 -(float) calcAdj:(int)i:(int)j;
 -(void) triagonalizeAndInverse;
+-(void)inverse;
 -(void) getCharacteristicPolynomailAndEigenvalues;
 -(BOOL) isZeroLineInMat:(int) index;
--(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size;
 -(NSString*) EigenSpaceToString:(float)fEigenValue;
 -(void)createEigenTransformationMatrix:(float)fEigenValue:(Matrix*)mat;
 -(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix;
 -(void) fixTrigiagonalMatrix;
--(int)findFirstNonZeroEntryInMat:(int)line;
+-(int)findFirstNonZeroEntryInLine:(int)line;
+-(int)findFirstNonZeroEntryInRow:(int)row;
 -(void)swapLines:(int)i:(int)j;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;
@@ -53,11 +54,12 @@
 -(void) getTridiagonalMatrix:(Matrix*)triMat;
 -(float*) getLine:(int)i;
 -(void)getKernel:(VectorSpace*) vec_space;
-/*static*/  
+/*static*/ 
 +(bool) compare:(Matrix*) A: (Matrix*) B;
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
 +(void) multiply:(float) constant: (Matrix*) A: (Matrix*) mRes;
 +(void) addMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
 +(bool) areLinesDependent:(Matrix*)mat:(int)iLine:(int)jLine;
++(void) copyMatrix:(Matrix*)original:(Matrix*)copy;
 
 @end
