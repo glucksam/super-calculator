@@ -19,7 +19,6 @@
 	int m_iSize;
 	float m_fdet;
 	float m_fTrace;
-	bool m_bShouldCalculateInvTri;
 }
 @property (readonly) float m_fdet;
 @property (readonly) float m_fTrace;
@@ -28,7 +27,6 @@
 -(void) det;
 -(float) det:(int*) row:(int*) column:(int) size;
 -(void) trace;
--(void) update;
 -(void) set:(int)i:(int)j:(float)val;
 -(float) calcAdj:(int)i:(int)j;
 -(void) triagonalizeAndInverse;
@@ -37,7 +35,6 @@
 -(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size;
 -(NSString*) EigenSpaceToString:(float)fEigenValue;
 -(void)createEigenTransformationMatrix:(float)fEigenValue:(Matrix*)mat;
--(void) doNotCalculateAdditionalMatrix;
 -(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;

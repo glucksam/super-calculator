@@ -33,7 +33,6 @@
 			[mRes set:i :k :fTemp];
 		}
 	}
-	[mRes update];
 }
 /**********************************************************************************************/
 +(void) multiply:(float) constant:(Matrix*)A:(Matrix*)mRes{
@@ -44,7 +43,6 @@
 			[mRes set:i :j :constant*[A getElement:i :j]];
 		}
 	}
-	[mRes update];
 }
 /**********************************************************************************************/
 +(bool) compare:(Matrix*) A:(Matrix*) B{
@@ -69,7 +67,6 @@
 			[mRes set:i :j :[A getElement:i :j]+[B getElement:i :j]];
 		}
 	}
-	[mRes update];
 }
 /**********************************************************************************************/
 -(NSString*) toString{
@@ -90,10 +87,16 @@
 }
 /**********************************************************************************************/
 -(NSString*) triagonalMatrixToString{
+	if (nil == m_aTriangMat) {
+		[self triagonalizeAndInverse];
+	}
 	return [m_aTriangMat toString];
 }
 /**********************************************************************************************/
 -(NSString*) inverseMatrixToString{
+	if (nil == m_aTriangMat) {/*if this one was calculated- so was the inverse, if exists...*/
+		[self triagonalizeAndInverse];
+	}
 	if (nil == m_aInvMat) {
 		return @"No inverse exist";
 	}
@@ -129,9 +132,6 @@
 }
 /**********************************************************************************************/
 -(void) triagonalizeAndInverse{
-	if(!m_bShouldCalculateInvTri){
-		return;
-	}
 	int i,j,k,line;
 	float fTemp,fInvTemp, fCurMult;
 	float* tempLine;
@@ -174,7 +174,6 @@
 	}
 	m_aTriangMat = [Matrix alloc];
 	[m_aTriangMat initNewMatrixWithFloatMatrix:m_iSize :fTriTempMat];
-	[m_aTriangMat doNotCalculateAdditionalMatrix];
 	for (i = 0; i < m_iSize; i++) {
 		free(fTriTempMat[i]);
 	}
@@ -185,7 +184,6 @@
 			free(fInvTempMat[i]);
 		}
 		free(fInvTempMat);
-		m_aInvMat = nil;
 		return;
 	}
 	float** mDiag = (float **)malloc(m_iSize * sizeof(float*));
@@ -236,7 +234,6 @@
 		}
 		m_aInvMat = [Matrix alloc];
 		[m_aInvMat initNewMatrixWithFloatMatrix:m_iSize:fInvTempMat];
-		[m_aInvMat doNotCalculateAdditionalMatrix];
 	}
 	
 	for (i = 0; i < m_iSize; i++) {
@@ -269,7 +266,6 @@
 			}
 		}
 	}
-	[mat update];
 }
 /**********************************************************************************************/
 -(void) fixTrigiagonalMatrix:(Matrix*)mat{
@@ -317,7 +313,6 @@
 			[transposeMat set:i :j : m_aMatrix[j][i]];
 		}
 	}
-	[transposeMat update];
 }
 /**********************************************************************************************/
 -(float) calcAdj:(int)i:(int)j{
@@ -348,7 +343,6 @@
 			[adj set:i :j :[self calcAdj:i :j]];
 		}
 	}
-	[adj update];
 }
 /**********************************************************************************************/
 -(void) trace{
@@ -359,14 +353,12 @@
 	}
 }
 /**********************************************************************************************/
--(void) update{
-	[self triagonalizeAndInverse];
-	[self trace];
-}
-/**********************************************************************************************/
 -(void) det{
 	int i;
 	m_fdet = 1;
+	if (nil == m_aTriangMat) {
+		[self triagonalizeAndInverse];
+	}
 	for (i = 0; i < m_iSize; i++){
 		m_fdet *= [m_aTriangMat getElement:i :i];
 	}
@@ -416,6 +408,9 @@
 }
 /**********************************************************************************************/
 -(int) getMatrixRank{
+	if(m_aTriangMat == nil){
+		[self triagonalizeAndInverse];
+	}
 	for (int i = 0; i<m_iSize; i++) {
 		if ([self isZeroLineInTriangMat:i]) {
 			return i;
@@ -425,6 +420,9 @@
 }
 /**********************************************************************************************/
 -(void) getTridiagonalMatrix:(Matrix*)triMat{
+	if(m_aTriangMat == nil){
+		[self triagonalizeAndInverse];
+	}
 	[triMat initNewMatrix:m_iSize];
 	int i,j;
 	for (i = 0; i < m_iSize; i++) {
@@ -432,8 +430,6 @@
 			[triMat set: i:j:[m_aTriangMat getElement:i :j]];
 		}
 	}
-	[triMat doNotCalculateAdditionalMatrix];
-	[triMat update];
 }
 /**********************************************************************************************/
 -(float) getElement: (int) i:(int) j{
@@ -444,16 +440,13 @@
 	m_aMatrix[i][j] = val;
 }
 /**********************************************************************************************/
--(void) doNotCalculateAdditionalMatrix{
-	m_bShouldCalculateInvTri = false;
-}
-/**********************************************************************************************/
 -(void) initNewMatrix:(int)size{
 	[super init];
 	[super setObjName:@"Matrix"];
+	m_aTriangMat = nil;
+	m_aInvMat = nil;
 	int i,j;
 	m_iSize = size;
-	m_bShouldCalculateInvTri = true;
 	m_aMatrix = (float **)malloc(m_iSize * sizeof(float*));
 	for (i = 0; i < m_iSize; i++) {
 		m_aMatrix[i] = (float *)malloc(m_iSize * sizeof(float));
@@ -463,7 +456,6 @@
 	}
 }
 /**********************************************************************************************/
-/*after using this one you need to update yourself... (for internal use)*/
 -(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix{
 	[self initNewMatrix:size];
 	int i,j;
@@ -490,7 +482,6 @@
 		}
 	}
 	NSLog(@"\n%@",[self toString]);
-	[self update];
 }
 /**********************************************************************************************/
 -(void) dealloc {
@@ -500,9 +491,7 @@
 		free(m_aMatrix[i]);
 	}
 	free(m_aMatrix);
-	if (nil != m_aInvMat) { /*the matrix was uninvertible*/
-		[m_aInvMat release];
-	}
+	[m_aInvMat release];
 	[m_aTriangMat release];
 	[m_pCharPol release];
 	[super dealloc];
