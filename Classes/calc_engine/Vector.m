@@ -128,6 +128,15 @@
 	}
 }
 /**********************************************************************************************/
+-(void) initNewVectorWithArray:(int)count:(double*)array{
+	int i;
+	m_iNumOfElements = count;
+	m_dElements = (double *)malloc(m_iNumOfElements * sizeof(double));
+	for(i = 0;i<count; i++) {
+		m_dElements[i] = array[i];
+	}
+}
+/**********************************************************************************************/
 -(void) dealloc {
     NSLog(@"Deallocing Vector\n" );
 	if (m_dElements!= nil) {

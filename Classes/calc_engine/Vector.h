@@ -18,6 +18,7 @@
 -(NSString*) toString;
 -(void)initNewVector:(int) count, ...;
 -(void)initNewVectorWithSring:(NSString*) input;
+-(void) initNewVectorWithArray:(int)count:(double*)array;
 -(double) getElement:(int)index;
 -(void) clean;
 -(double) getNorm;
