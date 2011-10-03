@@ -70,6 +70,16 @@
 	}
 }
 /**********************************************************************************************/
++(void) copyMatrix:(Matrix*)original:(Matrix*)copy{
+	[copy initNewMatrix:original.m_iSize];
+	int i,j;
+	for (i = 0; i < original.m_iSize; i++) {
+		for (j = 0; j < original.m_iSize; j++) {
+			[copy set: i:j:[original getElement:i :j]];
+		}
+	}
+}
+/**********************************************************************************************/
 -(NSString*) toString{
 	NSMutableString *print = [[NSMutableString alloc] init];
 	int i,j;
@@ -120,129 +130,91 @@
 	return res;
 }
 /**********************************************************************************************/
-/*returns 0 if no such line exists, othewise return the first k>i such that mat[k][j]!=0*/
--(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size{
-	int iLine;
-	for (iLine = i; iLine < size; iLine++) {
-		if(fMat[iLine][j]!= 0){
-			return iLine;
-		}
-	}
-	return 0;
-}
-/**********************************************************************************************/
--(void) triagonalizeAndInverse{
+-(void)inverse{
+	Matrix* tempMat = [Matrix alloc];
+	float fCurMult;
 	int i,j,k,line;
-	float fTemp,fInvTemp, fCurMult;
-	float* tempLine;
-	float** fInvTempMat;
-	float** fTriTempMat;
-	fTriTempMat = (float **)malloc(m_iSize * sizeof(float*));
-	fInvTempMat = (float **)malloc(m_iSize * sizeof(float*));
-	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
-		fTriTempMat[i] = (float *)malloc(m_iSize * sizeof(float));
-		fInvTempMat[i] = (float *)malloc(m_iSize * sizeof(float));
-		for (k = 0; k < m_iSize; k++){
-			fTriTempMat[i][k] = m_aMatrix[i][k];
-			fInvTempMat[i][k] = 0;
-		}
-		fInvTempMat[i][i] = 1;
-	}
-	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
-		for (j = 0; j < i; j++) {
-			if (fTriTempMat[j][j] != 0) { /*otherwise there's a problem*/
-				fCurMult = fTriTempMat[i][j]/fTriTempMat[j][j];
-				for (k = 0; k < m_iSize; k++) { /*multiply every element and reduce it*/
-					fTemp = fTriTempMat[i][k] - fCurMult*fTriTempMat[j][k];
-					fInvTemp = fInvTempMat[i][k] - fCurMult*fInvTempMat[j][k];
-					fTriTempMat[i][k] = fTemp;
-					fInvTempMat[i][k] = fInvTemp;
-				}
-			}else{
-				line = [self findFirstNonZeroEntry:j:j:fTriTempMat:m_iSize];
-				if(line != 0){/*switch lines and re-do it*/
-					tempLine = fTriTempMat[j];
-					fTriTempMat[j] = fTriTempMat[line];
-					fTriTempMat[line] = tempLine;
-					tempLine = fInvTempMat[j];
-					fInvTempMat[j] = fInvTempMat[line];
-					fInvTempMat[line] = tempLine;
-					j--;
-				}/*otherwise there's nothing to do*/
-			}
-		}
-	}
-	m_aTriangMat = [Matrix alloc];
-	[m_aTriangMat initNewMatrixWithFloatMatrix:m_iSize :fTriTempMat];
-	for (i = 0; i < m_iSize; i++) {
-		free(fTriTempMat[i]);
-	}
-	free(fTriTempMat);
-	[self det];
-	if(0 == m_fdet){
-		for (i = 0; i < m_iSize; i++) {
-			free(fInvTempMat[i]);
-		}
-		free(fInvTempMat);
-		[self fixTrigiagonalMatrix];
-		return;
-	}
-	float** mDiag = (float **)malloc(m_iSize * sizeof(float*));
-	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
-		mDiag[i] = (float *)malloc(m_iSize * sizeof(float));
-		for (k = 0; k < m_iSize; k++){
-			mDiag[i][k] = [m_aTriangMat getElement:i :k];
-		}
-	}
-	[self fixTrigiagonalMatrix];
+	[Matrix copyMatrix:m_aTriangMat :tempMat];
 	/*finish diagonalizing for inverse if det != 0*/
 	for (i = m_iSize -1 ; i >= 0; i--) { /*go over the lines*/
 		if(m_iSize-1 != i) {
 			for (j = m_iSize-1; j > i; j--) {
-				if (mDiag[j][j] != 0) { /*otherwise there's a problem*/
-					fCurMult = mDiag[i][j]/mDiag[j][j];
+				if ([tempMat getElement:j:j]!= 0) { /*otherwise there's a problem*/
+					fCurMult = [tempMat getElement:i:j]/[tempMat getElement:j:j];
 					for (k = 0; k < m_iSize; k++) { /*multiply every element andreduce it*/
-						fTemp = mDiag[i][k] - fCurMult*mDiag[j][k];
-						fInvTemp = fInvTempMat[i][k] - fCurMult*fInvTempMat[j][k];
-						mDiag[i][k] = fTemp;
-						fInvTempMat[i][k] = fInvTemp;
+						[m_aInvMat set:i :k :
+							[m_aInvMat getElement:i :k]-fCurMult*[m_aInvMat getElement:j :k]];
+						[tempMat set:i :k :
+							[tempMat getElement:i :k]-fCurMult*[tempMat getElement:j :k]];
 					}
 				}else {
-					line = [self findFirstNonZeroEntry:j:j:mDiag:m_iSize];
+					line = [tempMat findFirstNonZeroEntryInRow:j];
 					if(line != 0){/*switch lines and re-do it*/
-						tempLine = mDiag[j];
-						mDiag[j] = mDiag[line];
-						mDiag[line] = tempLine;
-						tempLine = fInvTempMat[j];
-						fInvTempMat[j] = fInvTempMat[line];
-						fInvTempMat[line] = tempLine;
+						[tempMat swapLines:line :j];
+						[m_aInvMat swapLines:line :j];
 						j--;
 					}/*otherwise matrix is not invertible!!!*/
 				}
 			}
 		}
-		/*just in case to prevent crushing*/
-		if(0 != mDiag[i][i]){
-			if(1 != mDiag[i][i]){
-				fCurMult = 1.0/mDiag[i][i];
+		if(0 != [tempMat getElement:i:i]){/*just in case to prevent crushing, though it doesn't happen
+							  (as it's not supposed to happen)*/
+			if(1 != [tempMat getElement:i:i]){
+				fCurMult = 1.0/[tempMat getElement:i:i];
 				for (k = 0; k < m_iSize; k++) {
-					mDiag[i][k] *= fCurMult;
-					fInvTempMat[i][k] *= fCurMult;
+					[m_aInvMat set:i :k :[m_aInvMat getElement:i :k]*fCurMult];
+					[tempMat set:i :k :[tempMat getElement:i :k]*fCurMult];
 				}
 			}
 		}else {
 			NSLog(@"Issue with matrix!!!");
 		}
-		m_aInvMat = [Matrix alloc];
-		[m_aInvMat initNewMatrixWithFloatMatrix:m_iSize:fInvTempMat];
 	}
-	
-	for (i = 0; i < m_iSize; i++) {
-		free(mDiag[i]);
-		free(fInvTempMat[i]);
+	[tempMat release];
+}
+/**********************************************************************************************/
+-(void) triagonalizeAndInverse{
+	int i,j,k,line;
+	float fCurMult;
+	m_aTriangMat = [Matrix alloc];
+	[m_aTriangMat initNewMatrix:m_iSize];
+	m_aInvMat = [Matrix alloc];
+	[m_aInvMat initNewMatrix:m_iSize];	
+	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
+		for (k = 0; k < m_iSize; k++){
+			[m_aTriangMat set:i :k :m_aMatrix[i][k]];
+			[m_aInvMat set:i :k :0];
+		}
+		[m_aInvMat set:i :i :1];
 	}
-	free(mDiag);
-	free(fInvTempMat);
+	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
+		for (j = 0; j < i; j++) {
+			if ([m_aTriangMat getElement:j:j]!= 0) { /*otherwise there's a problem*/
+				fCurMult = [m_aTriangMat getElement:i:j]/[m_aTriangMat getElement:j:j];
+				for (k = 0; k < m_iSize; k++) { /*multiply every element and reduce it*/
+					[m_aInvMat set:i :k :
+						[m_aInvMat getElement:i :k]-fCurMult*[m_aInvMat getElement:j :k]];
+					[m_aTriangMat set:i :k :
+						[m_aTriangMat getElement:i :k]-fCurMult*[m_aTriangMat getElement:j :k]];
+				}
+			}else{
+				line = [m_aTriangMat findFirstNonZeroEntryInRow:j];
+				if(line != 0){/*switch lines and re-do it*/
+					[m_aTriangMat swapLines:line :j];
+					[m_aInvMat swapLines:line :j];
+					j--;
+				}/*otherwise there's nothing to do*/
+			}
+		}
+	}
+	[self det];
+	if(0 == m_fdet){
+		[m_aInvMat release];
+		m_aInvMat = nil;
+	}else {
+		[self inverse];
+	}
+	[self fixTrigiagonalMatrix];
 }
 /**********************************************************************************************/
 -(void) getCharacteristicPolynomailAndEigenvalues{
@@ -275,7 +247,7 @@
 +(bool) areLinesDependent:(Matrix*)mat:(int)iLine:(int)jLine{
 	int i,j;
 	double* tempVec;
-	float fTempI,fTempJ, fTemp;
+	float fTempI,fTempJ;
 	Vector* vec;
 	bool res = false;
 	for (i = 0; i < mat.m_iSize; i++) {
@@ -288,7 +260,7 @@
 			fTempJ = [mat getElement:jLine :i];
 			tempVec = (double*)malloc(mat.m_iSize*sizeof(double));
 			for (j = 0; j < mat.m_iSize; j++) {
-				tempVec[j] = fTemp = [mat getElement:iLine :j]*fTempJ-[mat getElement:jLine :j]*fTempI;
+				tempVec[j] = [mat getElement:iLine :j]*fTempJ-[mat getElement:jLine :j]*fTempI;
 			}
 			vec = [Vector alloc];
 			[vec initNewVectorWithArray:mat.m_iSize :tempVec];
@@ -303,7 +275,18 @@
 	return true;
 }
 /**********************************************************************************************/
--(int)findFirstNonZeroEntryInMat:(int)line{
+/*returns 0 if no such line exists, othewise return the first k>i such that mat[k][j]!=0*/
+-(int)findFirstNonZeroEntryInRow:(int)row{
+	int i;
+	for (i = 0; i < m_iSize; i++) {
+		if(m_aMatrix[i][row]!= 0){
+			return i;
+		}
+	}
+	return 0;
+}
+/**********************************************************************************************/
+-(int)findFirstNonZeroEntryInLine:(int)line{
 	int j;
 	for (j = 0; j < m_iSize; j++) {
 		if (m_aMatrix[line][j] != 0) {
@@ -320,7 +303,7 @@
 	int iLastEntry = -2;
 	float fCurrMult;
 	for (i = 0; i < m_iSize; i++) {
-		iTempIndex = [m_aTriangMat findFirstNonZeroEntryInMat:i];
+		iTempIndex = [m_aTriangMat findFirstNonZeroEntryInLine:i];
 		if (iTempIndex == iLastEntry){
 			/*one should remove first entry in new line*/
 			fCurrMult = [m_aTriangMat getElement:i :iLastEntry]/
@@ -329,21 +312,20 @@
 				[m_aTriangMat set:i:j :[m_aTriangMat getElement:i :j]-
 				 fCurrMult*[m_aTriangMat getElement:i-1 :j]];
 			}				
-			iTempIndex = [m_aTriangMat findFirstNonZeroEntryInMat:i];
+			iTempIndex = [m_aTriangMat findFirstNonZeroEntryInLine:i];
 		}
 		iLastEntry = iTempIndex;
 		if (-1 == iLastEntry) {
 			break;
 		}
 	}
-	NSLog(@"unifyTridiagonalEntries: results:\n%@",[m_aTriangMat toString]);
 }
 /**********************************************************************************************/
 -(void) fixTrigiagonalMatrix{
 	int i,j,index,iMove;
 	[self unifyTridiagonalEntries];
 	for (i = 0; i<m_iSize; i++) {
-		index = [m_aTriangMat findFirstNonZeroEntryInMat:i];
+		index = [m_aTriangMat findFirstNonZeroEntryInLine:i];
 		if(index == i){/*this line is ok*/
 			continue;
 		}else if(index == -1){/*the rest is zero lines we're done*/
@@ -544,13 +526,7 @@
 	if(m_aTriangMat == nil){
 		[self triagonalizeAndInverse];
 	}
-	[triMat initNewMatrix:m_iSize];
-	int i,j;
-	for (i = 0; i < m_iSize; i++) {
-		for (j = 0; j < m_iSize; j++) {
-			[triMat set: i:j:[m_aTriangMat getElement:i :j]];
-		}
-	}
+	[Matrix copyMatrix:m_aTriangMat :triMat];
 }
 /**********************************************************************************************/
 -(float) getElement: (int) i:(int) j{
