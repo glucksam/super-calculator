@@ -10,7 +10,7 @@
 #import "Matrix.h"
 #import "polymatrix.h"
 #import "Operations.h"
-
+#import "Vector.h"
 
 @implementation Matrix
 @synthesize m_fTrace;
@@ -90,40 +90,14 @@
 }
 /**********************************************************************************************/
 -(NSString*) triagonalMatrixToString{
-	int i,j;
-	NSMutableString *print = [[NSMutableString alloc] init];
-	for(i = 0; i<m_iSize; i++){
-		NSMutableString *line =  [[NSMutableString alloc] init];
-		for(j = 0; j < m_iSize; j++){
-			[line appendFormat:@"%0.3f ", m_aTriangMat[i][j]];
-		}
-		[line appendFormat:@"\n"];
-		[print appendString:line];
-		[line release];
-	}
-	NSString* res = [NSString stringWithString: print];
-	[print release];
-	return res;	
+	return [m_aTriangMat toString];
 }
 /**********************************************************************************************/
 -(NSString*) inverseMatrixToString{
-	int i,j;
 	if (nil == m_aInvMat) {
 		return @"No inverse exist";
 	}
-	NSMutableString *print = [[NSMutableString alloc] init];
-	for(i = 0; i<m_iSize; i++){
-		NSMutableString *line =  [[NSMutableString alloc] init];
-		for(j = 0; j < m_iSize; j++){
-			[line appendFormat:@"%0.3f ", m_aInvMat[i][j]];
-		}
-		[line appendFormat:@"\n"];
-		[print appendString:line];
-		[line release];
-	}
-	NSString* res = [NSString stringWithString: print];
-	[print release];
-	return res;	
+	return [m_aInvMat toString];
 }
 /**********************************************************************************************/
 -(NSString*) CharacteristicPolynomailandEigenvaluesToString{
@@ -135,7 +109,7 @@
 	int i;
 	for (i = 1; i<= m_fEigenValues[0]; i++) {
 		NSLog(@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]);
-		/*[self EigenSpaceToString:m_fEigenValues[i]];*/
+		[self EigenSpaceToString:m_fEigenValues[i]];
 		[mutStr appendFormat:@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]];
 	}
 	NSString* res = [NSString stringWithString: mutStr];
@@ -155,50 +129,62 @@
 }
 /**********************************************************************************************/
 -(void) triagonalizeAndInverse{
+	if(!m_bShouldCalculateInvTri){
+		return;
+	}
 	int i,j,k,line;
 	float fTemp,fInvTemp, fCurMult;
 	float* tempLine;
-	m_aTriangMat = (float **)malloc(m_iSize * sizeof(float*));
-	m_aInvMat = (float **)malloc(m_iSize * sizeof(float*));
+	float** fInvTempMat;
+	float** fTriTempMat;
+	fTriTempMat = (float **)malloc(m_iSize * sizeof(float*));
+	fInvTempMat = (float **)malloc(m_iSize * sizeof(float*));
 	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
-		m_aTriangMat[i] = (float *)malloc(m_iSize * sizeof(float));
-		m_aInvMat[i] = (float *)malloc(m_iSize * sizeof(float));
+		fTriTempMat[i] = (float *)malloc(m_iSize * sizeof(float));
+		fInvTempMat[i] = (float *)malloc(m_iSize * sizeof(float));
 		for (k = 0; k < m_iSize; k++){
-			m_aTriangMat[i][k] = m_aMatrix[i][k];
-			m_aInvMat[i][k] = 0;
+			fTriTempMat[i][k] = m_aMatrix[i][k];
+			fInvTempMat[i][k] = 0;
 		}
-		m_aInvMat[i][i] = 1;
+		fInvTempMat[i][i] = 1;
 	}
 	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
 		for (j = 0; j < i; j++) {
-			if (m_aTriangMat[j][j] != 0) { /*otherwise there's a problem*/
-				fCurMult = m_aTriangMat[i][j]/m_aTriangMat[j][j];
+			if (fTriTempMat[j][j] != 0) { /*otherwise there's a problem*/
+				fCurMult = fTriTempMat[i][j]/fTriTempMat[j][j];
 				for (k = 0; k < m_iSize; k++) { /*multiply every element and reduce it*/
-					fTemp = m_aTriangMat[i][k] - fCurMult*m_aTriangMat[j][k];
-					fInvTemp = m_aInvMat[i][k] - fCurMult*m_aInvMat[j][k];
-					m_aTriangMat[i][k] = fTemp;
-					m_aInvMat[i][k] = fInvTemp;
+					fTemp = fTriTempMat[i][k] - fCurMult*fTriTempMat[j][k];
+					fInvTemp = fInvTempMat[i][k] - fCurMult*fInvTempMat[j][k];
+					fTriTempMat[i][k] = fTemp;
+					fInvTempMat[i][k] = fInvTemp;
 				}
 			}else{
-				line = [self findFirstNonZeroEntry:j:j:m_aTriangMat:m_iSize];
+				line = [self findFirstNonZeroEntry:j:j:fTriTempMat:m_iSize];
 				if(line != 0){/*switch lines and re-do it*/
-					tempLine = m_aTriangMat[j];
-					m_aTriangMat[j] = m_aTriangMat[line];
-					m_aTriangMat[line] = tempLine;
-					tempLine = m_aInvMat[j];
-					m_aInvMat[j] = m_aInvMat[line];
-					m_aInvMat[line] = tempLine;
+					tempLine = fTriTempMat[j];
+					fTriTempMat[j] = fTriTempMat[line];
+					fTriTempMat[line] = tempLine;
+					tempLine = fInvTempMat[j];
+					fInvTempMat[j] = fInvTempMat[line];
+					fInvTempMat[line] = tempLine;
 					j--;
 				}/*otherwise there's nothing to do*/
 			}
 		}
 	}
+	m_aTriangMat = [Matrix alloc];
+	[m_aTriangMat initNewMatrixWithFloatMatrix:m_iSize :fTriTempMat];
+	[m_aTriangMat doNotCalculateAdditionalMatrix];
+	for (i = 0; i < m_iSize; i++) {
+		free(fTriTempMat[i]);
+	}
+	free(fTriTempMat);
 	[self det];
 	if(0 == m_fdet){
 		for (i = 0; i < m_iSize; i++) {
-			free(m_aInvMat[i]);
+			free(fInvTempMat[i]);
 		}
-		free(m_aInvMat);
+		free(fInvTempMat);
 		m_aInvMat = nil;
 		return;
 	}
@@ -206,7 +192,7 @@
 	for (i = 0; i < m_iSize; i++) { /*go over the lines*/
 		mDiag[i] = (float *)malloc(m_iSize * sizeof(float));
 		for (k = 0; k < m_iSize; k++){
-			mDiag[i][k] = m_aTriangMat[i][k];
+			mDiag[i][k] = [m_aTriangMat getElement:i :k];
 		}
 	}
 	
@@ -218,9 +204,9 @@
 					fCurMult = mDiag[i][j]/mDiag[j][j];
 					for (k = 0; k < m_iSize; k++) { /*multiply every element andreduce it*/
 						fTemp = mDiag[i][k] - fCurMult*mDiag[j][k];
-						fInvTemp = m_aInvMat[i][k] - fCurMult*m_aInvMat[j][k];
+						fInvTemp = fInvTempMat[i][k] - fCurMult*fInvTempMat[j][k];
 						mDiag[i][k] = fTemp;
-						m_aInvMat[i][k] = fInvTemp;
+						fInvTempMat[i][k] = fInvTemp;
 					}
 				}else {
 					line = [self findFirstNonZeroEntry:j:j:mDiag:m_iSize];
@@ -228,9 +214,9 @@
 						tempLine = mDiag[j];
 						mDiag[j] = mDiag[line];
 						mDiag[line] = tempLine;
-						tempLine = m_aInvMat[j];
-						m_aInvMat[j] = m_aInvMat[line];
-						m_aInvMat[line] = tempLine;
+						tempLine = fInvTempMat[j];
+						fInvTempMat[j] = fInvTempMat[line];
+						fInvTempMat[line] = tempLine;
 						j--;
 					}/*otherwise matrix is not invertible!!!*/
 				}
@@ -242,18 +228,23 @@
 				fCurMult = 1.0/mDiag[i][i];
 				for (k = 0; k < m_iSize; k++) {
 					mDiag[i][k] *= fCurMult;
-					m_aInvMat[i][k] *= fCurMult;
+					fInvTempMat[i][k] *= fCurMult;
 				}
 			}
 		}else {
 			NSLog(@"Issue with matrix!!!");
 		}
+		m_aInvMat = [Matrix alloc];
+		[m_aInvMat initNewMatrixWithFloatMatrix:m_iSize:fInvTempMat];
+		[m_aInvMat doNotCalculateAdditionalMatrix];
 	}
 	
 	for (i = 0; i < m_iSize; i++) {
 		free(mDiag[i]);
+		free(fInvTempMat[i]);
 	}
 	free(mDiag);
+	free(fInvTempMat);
 }
 /**********************************************************************************************/
 -(void) getCharacteristicPolynomailAndEigenvalues{
@@ -266,30 +257,55 @@
 	[m_pCharPol getRationalRoots:&m_fEigenValues];
 }
 /**********************************************************************************************/
-/*-(void)createEigenTransformationMatrix:(float)fEigenValue:(float***)fMatrix{
+-(void)createEigenTransformationMatrix:(float)fEigenValue:(Matrix*)mat{
 	int i,j;
-	(*fMatrix) = (float **)malloc(m_iSize * sizeof(float*));
+	[mat initNewMatrix:m_iSize];
 	for (i = 0; i < m_iSize; i++) {
-		(*fMatrix)[i] = (float *)malloc(m_iSize * sizeof(float));
 		for (j = 0; j < m_iSize; j++) {
 			if (i == j) {
-				(*fMatrix)[i][i] = m_aMatrix[i][i]-fEigenValue;
+				[mat set:i:i:m_aMatrix[i][i]-fEigenValue];
 			}else {
-				(*fMatrix)[i][j] = m_aMatrix[i][j];
+				[mat set:i:j:m_aMatrix[i][j]];
 			}
 		}
 	}
+	[mat update];
 }
 /**********************************************************************************************/
-/*-(NSString*) EigenSpaceToString:(float)fEigenValue{
-	float** tempMat;
-	int i;
-	[self createEigenTransformationMatrix:fEigenValue:&tempMat];
-	[Operations printMatrixToLog:tempMat:m_iSize];
-	for (i = 0; i < m_iSize; i++) {
-		free(tempMat[i]);
+-(void) fixTrigiagonalMatrix:(Matrix*)mat{
+}
+/**********************************************************************************************/
+-(NSString*) EigenSpaceToString:(float)fEigenValue{
+	Matrix* kernelMatrix = [Matrix alloc];
+	int i,j;
+	float fTempSum;
+	[self createEigenTransformationMatrix:fEigenValue:kernelMatrix];
+	NSLog(@"kernel matrix:\n%@",[kernelMatrix toString]);
+	double* sol = (double *)malloc(m_iSize * sizeof(double));
+	for (i = m_iSize-1 ; i >=0 ; i--) { /*populate sol with one solution*/
+		fTempSum = 0;
+		for (j = i+1; j < m_iSize; j++){/*summing what we have so far, to calculate sol[i]*/
+			fTempSum += [kernelMatrix getElement:i:j]*sol[j];
+		}
+		if (fTempSum == 0) {
+			if ([kernelMatrix getElement:i:i] == 0) {
+				sol[i] = 1;
+			}else {
+				sol[i] = 0;
+			}
+		}else if ([kernelMatrix getElement:i:i] != 0) { /*if it's 0, there's a problem in algorithm*/
+			sol[i] = fTempSum/[kernelMatrix getElement:i:i]*(-1);
+		}else {
+			NSLog(@"A problem in retrieving the kernel of this matrix!!!");
+			break;
+		}
 	}
-	free(tempMat);
+	Vector *v = [Vector alloc];
+	[v initNewVectorWithArray:m_iSize :sol];
+	NSLog(@"first solution- %@",[v toString]);
+	free(sol);
+	[v release];
+	[kernelMatrix release];
 	return @"";
 }
 /**********************************************************************************************/
@@ -352,7 +368,7 @@
 	int i;
 	m_fdet = 1;
 	for (i = 0; i < m_iSize; i++){
-		m_fdet *= m_aTriangMat[i][i];
+		m_fdet *= [m_aTriangMat getElement:i :i];
 	}
 }
 /**********************************************************************************************/
@@ -392,7 +408,7 @@
 -(BOOL) isZeroLineInTriangMat:(int) index{
 	int j;
 	for (j = 0; j<m_iSize; j++) {
-		if (m_aTriangMat[index][j] != 0) {
+		if ([ m_aTriangMat getElement:index :j]!= 0) {
 			return FALSE;
 		}
 	}
@@ -408,6 +424,18 @@
 	return m_iSize;
 }
 /**********************************************************************************************/
+-(void) getTridiagonalMatrix:(Matrix*)triMat{
+	[triMat initNewMatrix:m_iSize];
+	int i,j;
+	for (i = 0; i < m_iSize; i++) {
+		for (j = 0; j < m_iSize; j++) {
+			[triMat set: i:j:[m_aTriangMat getElement:i :j]];
+		}
+	}
+	[triMat doNotCalculateAdditionalMatrix];
+	[triMat update];
+}
+/**********************************************************************************************/
 -(float) getElement: (int) i:(int) j{
 	return m_aMatrix[i][j];
 }
@@ -416,11 +444,16 @@
 	m_aMatrix[i][j] = val;
 }
 /**********************************************************************************************/
+-(void) doNotCalculateAdditionalMatrix{
+	m_bShouldCalculateInvTri = false;
+}
+/**********************************************************************************************/
 -(void) initNewMatrix:(int)size{
 	[super init];
 	[super setObjName:@"Matrix"];
 	int i,j;
 	m_iSize = size;
+	m_bShouldCalculateInvTri = true;
 	m_aMatrix = (float **)malloc(m_iSize * sizeof(float*));
 	for (i = 0; i < m_iSize; i++) {
 		m_aMatrix[i] = (float *)malloc(m_iSize * sizeof(float));
@@ -428,6 +461,18 @@
 			[self set: i:j:0];
 		}
 	}
+}
+/**********************************************************************************************/
+/*after using this one you need to update yourself... (for internal use)*/
+-(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix{
+	[self initNewMatrix:size];
+	int i,j;
+	for (i = 0; i < m_iSize; i++) {
+		for (j = 0; j < m_iSize; j++) {
+			[self set: i:j:baseMatrix[i][j]];
+		}
+	}
+	NSLog(@"\n%@",[self toString]);
 }
 /**********************************************************************************************/
 -(void) initNewMatrixWithString:(NSString*) input{
@@ -453,16 +498,12 @@
 	int i;
 	for (i = 0; i < m_iSize; i++) {
 		free(m_aMatrix[i]);
-		free(m_aTriangMat[i]);
-		if (nil != m_aInvMat) { /*the matrix was uninvertible*/
-			free(m_aInvMat[i]);
-		}
 	}
 	free(m_aMatrix);
-	free(m_aTriangMat);
 	if (nil != m_aInvMat) { /*the matrix was uninvertible*/
-		free(m_aInvMat);
+		[m_aInvMat release];
 	}
+	[m_aTriangMat release];
 	[m_pCharPol release];
 	[super dealloc];
 }
