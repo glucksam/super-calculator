@@ -22,6 +22,7 @@
 -(double) getElement:(int)index;
 -(void) clean;
 -(double) getNorm;
+-(bool) isZeroVector;
 /*static functions*/
 +(void) add:(Vector*) v:(Vector*) u:(Vector*)res;
 +(double) inner_prod:(Vector*) v:(Vector*) u;

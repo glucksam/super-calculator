@@ -8,6 +8,7 @@
 
 #import "MathObject.h"
 #import "Polynom.h"
+#import "VectorSpace.h"
 
 @interface Matrix : MathObject {
 	@private
@@ -31,11 +32,14 @@
 -(float) calcAdj:(int)i:(int)j;
 -(void) triagonalizeAndInverse;
 -(void) getCharacteristicPolynomailAndEigenvalues;
--(BOOL) isZeroLineInTriangMat:(int) index;
+-(BOOL) isZeroLineInMat:(int) index;
 -(int)findFirstNonZeroEntry:(int)i:(int)j:(float**)fMat:(int)size;
 -(NSString*) EigenSpaceToString:(float)fEigenValue;
 -(void)createEigenTransformationMatrix:(float)fEigenValue:(Matrix*)mat;
 -(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix;
+-(void) fixTrigiagonalMatrix;
+-(int)findFirstNonZeroEntryInMat:(int)line;
+-(void)swapLines:(int)i:(int)j;
 /*public functions*/
 -(void) initNewMatrixWithString:(NSString*) input;
 -(void) initNewMatrix:(int) size;
@@ -47,10 +51,13 @@
 -(NSString*) CharacteristicPolynomailandEigenvaluesToString;
 -(int) getMatrixRank;
 -(void) getTridiagonalMatrix:(Matrix*)triMat;
+-(float*) getLine:(int)i;
+-(void)getKernel:(VectorSpace*) vec_space;
 /*static*/  
 +(bool) compare:(Matrix*) A: (Matrix*) B;
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
 +(void) multiply:(float) constant: (Matrix*) A: (Matrix*) mRes;
 +(void) addMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
++(bool) areLinesDependent:(Matrix*)mat:(int)iLine:(int)jLine;
 
 @end

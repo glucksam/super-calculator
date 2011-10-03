@@ -11,6 +11,7 @@
 #import "polymatrix.h"
 #import "Operations.h"
 #import "Vector.h"
+#import "VectorSpace.h"
 
 @implementation Matrix
 @synthesize m_fTrace;
@@ -111,7 +112,6 @@
 	[mutStr appendFormat:@"%@\n",[m_pCharPol toString]];
 	int i;
 	for (i = 1; i<= m_fEigenValues[0]; i++) {
-		NSLog(@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]);
 		[self EigenSpaceToString:m_fEigenValues[i]];
 		[mutStr appendFormat:@"eigenvalue %i = %0.3f\n",i,m_fEigenValues[i]];
 	}
@@ -184,6 +184,7 @@
 			free(fInvTempMat[i]);
 		}
 		free(fInvTempMat);
+		[self fixTrigiagonalMatrix];
 		return;
 	}
 	float** mDiag = (float **)malloc(m_iSize * sizeof(float*));
@@ -193,7 +194,7 @@
 			mDiag[i][k] = [m_aTriangMat getElement:i :k];
 		}
 	}
-	
+	[self fixTrigiagonalMatrix];
 	/*finish diagonalizing for inverse if det != 0*/
 	for (i = m_iSize -1 ; i >= 0; i--) { /*go over the lines*/
 		if(m_iSize-1 != i) {
@@ -268,41 +269,153 @@
 	}
 }
 /**********************************************************************************************/
--(void) fixTrigiagonalMatrix:(Matrix*)mat{
+/*we are assuming none of them are 0 lines... 
+ If one is a zero line it would be beneath the non zeor one, and that's the one
+ we are going to zerofy anyways*/
++(bool) areLinesDependent:(Matrix*)mat:(int)iLine:(int)jLine{
+	int i,j;
+	double* tempVec;
+	float fTempI,fTempJ, fTemp;
+	Vector* vec;
+	bool res = false;
+	for (i = 0; i < mat.m_iSize; i++) {
+		if (0 == [mat getElement:iLine :i] && 0 == [mat getElement:jLine :i]) {
+			continue;
+		}else if(0 == [mat getElement:iLine :i] || 0 ==[mat getElement:jLine :i]){
+			return false;
+		}else {
+			fTempI = [mat getElement:iLine :i];
+			fTempJ = [mat getElement:jLine :i];
+			tempVec = (double*)malloc(mat.m_iSize*sizeof(double));
+			for (j = 0; j < mat.m_iSize; j++) {
+				tempVec[j] = fTemp = [mat getElement:iLine :j]*fTempJ-[mat getElement:jLine :j]*fTempI;
+			}
+			vec = [Vector alloc];
+			[vec initNewVectorWithArray:mat.m_iSize :tempVec];
+			if ([vec isZeroVector]) {
+				res = true;
+			}
+			[vec release];
+			free(tempVec);
+			return res;
+		}
+	}
+	return true;
+}
+/**********************************************************************************************/
+-(int)findFirstNonZeroEntryInMat:(int)line{
+	int j;
+	for (j = 0; j < m_iSize; j++) {
+		if (m_aMatrix[line][j] != 0) {
+			return j;
+		}
+	}
+	return -1; /*no non zero entry exists*/
+}
+/**********************************************************************************************/
+/*this makes sure the number of non zero lines is inded the rank of the matrix, hence called by
+ tridiagonalizeAndInverse function*/
+-(void) unifyTridiagonalEntries{
+	int i,j,iTempIndex;
+	int iLastEntry = -2;
+	float fCurrMult;
+	for (i = 0; i < m_iSize; i++) {
+		iTempIndex = [m_aTriangMat findFirstNonZeroEntryInMat:i];
+		if (iTempIndex == iLastEntry){
+			/*one should remove first entry in new line*/
+			fCurrMult = [m_aTriangMat getElement:i :iLastEntry]/
+			[m_aTriangMat getElement:i-1 :iLastEntry];
+			for (j = i; j < m_iSize; j++) { /*multiply every element andreduce it*/
+				[m_aTriangMat set:i:j :[m_aTriangMat getElement:i :j]-
+				 fCurrMult*[m_aTriangMat getElement:i-1 :j]];
+			}				
+			iTempIndex = [m_aTriangMat findFirstNonZeroEntryInMat:i];
+		}
+		iLastEntry = iTempIndex;
+		if (-1 == iLastEntry) {
+			break;
+		}
+	}
+	NSLog(@"unifyTridiagonalEntries: results:\n%@",[m_aTriangMat toString]);
+}
+/**********************************************************************************************/
+-(void) fixTrigiagonalMatrix{
+	int i,j,index,iMove;
+	[self unifyTridiagonalEntries];
+	for (i = 0; i<m_iSize; i++) {
+		index = [m_aTriangMat findFirstNonZeroEntryInMat:i];
+		if(index == i){/*this line is ok*/
+			continue;
+		}else if(index == -1){/*the rest is zero lines we're done*/
+			return;
+		}else{
+		/*otherwise- this line should be in index and the line above it should be zero lines*/
+		/*this function is based on the fact that all the zero lines are at the bottom*/
+			iMove = index-i;
+			for (j = m_iSize-iMove-1; j >= i; j--) {
+				[m_aTriangMat swapLines:j :j+iMove];
+			}
+		}
+	}
 }
 /**********************************************************************************************/
 -(NSString*) EigenSpaceToString:(float)fEigenValue{
 	Matrix* kernelMatrix = [Matrix alloc];
-	int i,j;
-	float fTempSum;
+	VectorSpace* vec_space = [VectorSpace alloc];
 	[self createEigenTransformationMatrix:fEigenValue:kernelMatrix];
-	NSLog(@"kernel matrix:\n%@",[kernelMatrix toString]);
-	double* sol = (double *)malloc(m_iSize * sizeof(double));
-	for (i = m_iSize-1 ; i >=0 ; i--) { /*populate sol with one solution*/
-		fTempSum = 0;
-		for (j = i+1; j < m_iSize; j++){/*summing what we have so far, to calculate sol[i]*/
-			fTempSum += [kernelMatrix getElement:i:j]*sol[j];
-		}
-		if (fTempSum == 0) {
-			if ([kernelMatrix getElement:i:i] == 0) {
-				sol[i] = 1;
-			}else {
-				sol[i] = 0;
-			}
-		}else if ([kernelMatrix getElement:i:i] != 0) { /*if it's 0, there's a problem in algorithm*/
-			sol[i] = fTempSum/[kernelMatrix getElement:i:i]*(-1);
-		}else {
-			NSLog(@"A problem in retrieving the kernel of this matrix!!!");
-			break;
-		}
-	}
-	Vector *v = [Vector alloc];
-	[v initNewVectorWithArray:m_iSize :sol];
-	NSLog(@"first solution- %@",[v toString]);
-	free(sol);
-	[v release];
+	[kernelMatrix getKernel:vec_space];
+	NSLog(@"eigen space of eigen value %f is:\n%@",fEigenValue,[vec_space toString]);
+	NSString* res = [vec_space toString];
 	[kernelMatrix release];
-	return @"";
+	[vec_space release];
+	return res;
+}
+/**********************************************************************************************/
+-(void)getKernel:(VectorSpace*)vec_space{
+	Matrix* ker = [Matrix alloc];
+	int i,j,size_counter = 0,zeros_counter;
+	float fTempSum;
+	[self triagonalizeAndInverse];
+	[self getTridiagonalMatrix:ker];
+	NSLog(@"matrix has rank %i, looking for kernel at:\n%@",[self getMatrixRank],[ker toString]);
+	int subspace_size = m_iSize - [self getMatrixRank];
+	Vector** vecs = (Vector**) malloc(subspace_size*sizeof(Vector*));
+	double* sol = (double *)malloc(m_iSize * sizeof(double));
+	for (size_counter = 0; size_counter < subspace_size; size_counter++) {
+		zeros_counter = 0;
+		for (i = m_iSize-1 ; i >= 0 ; i--) { /*populate sol with one solution*/
+			fTempSum = 0;
+			for (j = i+1; j < m_iSize; j++){/*summing what we have so far, to calculate sol[i]*/
+				fTempSum += [ker getElement:i:j]*sol[j];
+			}
+			if (fTempSum == 0) {
+				if ([ker getElement:i:i] == 0) {
+					if (zeros_counter <= size_counter) {
+						sol[i] = 1;
+						zeros_counter++;
+					}else{
+						sol[i] = 0;
+					}
+				}else {
+					sol[i] = 0;
+				}
+			}else if ([ker getElement:i:i] != 0) { /*if it's 0, there's a problem in algorithm*/
+				sol[i] = fTempSum/[ker getElement:i:i]*(-1);
+			}else {
+				NSLog(@"A problem in retrieving the kernel of this matrix!!!");
+				break;
+			}
+		}
+		vecs[size_counter] = [Vector alloc];
+		[vecs[size_counter] initNewVectorWithArray:m_iSize :sol];
+	}
+	[vec_space initVectorSpace:m_iSize :subspace_size :vecs];
+	free(sol);
+	for (i = 0; i<subspace_size; i++) {
+		[vecs[i] release];
+	}
+	free(vecs);
+	[ker release];
 }
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{
@@ -397,10 +510,10 @@
 	return det;
 }
 /**********************************************************************************************/
--(BOOL) isZeroLineInTriangMat:(int) index{
+-(BOOL) isZeroLineInMat:(int) index{
 	int j;
 	for (j = 0; j<m_iSize; j++) {
-		if ([ m_aTriangMat getElement:index :j]!= 0) {
+		if ([self getElement:index :j]!= 0) {
 			return FALSE;
 		}
 	}
@@ -411,12 +524,20 @@
 	if(m_aTriangMat == nil){
 		[self triagonalizeAndInverse];
 	}
+	int iRank = 0;
 	for (int i = 0; i<m_iSize; i++) {
-		if ([self isZeroLineInTriangMat:i]) {
-			return i;
+		if (![m_aTriangMat isZeroLineInMat:i]) {
+			iRank++;
 		}
 	}
-	return m_iSize;
+	return iRank;
+}
+/**********************************************************************************************/
+-(void)swapLines:(int)i:(int)j{
+	float* temp;
+	temp = m_aMatrix[i];
+	m_aMatrix[i] = m_aMatrix[j];
+	m_aMatrix[j] = temp;
 }
 /**********************************************************************************************/
 -(void) getTridiagonalMatrix:(Matrix*)triMat{
@@ -438,6 +559,11 @@
 /**********************************************************************************************/
 -(void) set:(int)i:(int)j:(float)val{
 	m_aMatrix[i][j] = val;
+}
+/**********************************************************************************************/
+/*retrives a line, not duplicating it!*/
+-(float*) getLine:(int)i{
+	return m_aMatrix[i];
 }
 /**********************************************************************************************/
 -(void) initNewMatrix:(int)size{
@@ -464,7 +590,6 @@
 			[self set: i:j:baseMatrix[i][j]];
 		}
 	}
-	NSLog(@"\n%@",[self toString]);
 }
 /**********************************************************************************************/
 -(void) initNewMatrixWithString:(NSString*) input{
@@ -481,11 +606,9 @@
 			[self set: i:j:[[line objectAtIndex: j] floatValue]];
 		}
 	}
-	NSLog(@"\n%@",[self toString]);
 }
 /**********************************************************************************************/
 -(void) dealloc {
-    NSLog(@"Deallocing Matrix\n" );
 	int i;
 	for (i = 0; i < m_iSize; i++) {
 		free(m_aMatrix[i]);
@@ -496,6 +619,5 @@
 	[m_pCharPol release];
 	[super dealloc];
 }
-
 
 @end
