@@ -127,7 +127,6 @@
 }
 /**********************************************************************************************/
 -(void) dealloc {
-    NSLog(@"Deallocing Polymatrix\n" );
 	int i,j;
 	for (i = 0; i < m_iSize; i++){
 		for (j = 0; j < m_iSize; j++){

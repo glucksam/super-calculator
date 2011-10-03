@@ -334,7 +334,6 @@
 }
 /**********************************************************************************************/
 -(void) dealloc {
-    NSLog(@"Deallocing Polynom\n" );
 	if (m_fCoefficients!= nil) {
 		free(m_fCoefficients);
 	}

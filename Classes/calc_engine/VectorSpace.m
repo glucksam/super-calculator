@@ -24,7 +24,7 @@
 			[print appendString:[m_vBasis[i] toString]];
 			bIsFirst = false;
 		}else {
-			[print appendString:[m_vBasis[i] toString]];
+			[print appendFormat:@";%@",[m_vBasis[i] toString]];
 		}
 	}
 	[print appendString:@"}"];
@@ -53,6 +53,20 @@
 		}
 		return TRUE;
 	}
+}
+/**********************************************************************************************/
+-(BOOL) initVectorSpaceMultiple:(int)space_size:(int) subspace_size,...{
+	va_list args;
+	va_start(args, subspace_size);
+	Vector* value;
+	Vector** vector_list = (Vector**)malloc(subspace_size * sizeof(Vector*));
+	int i;
+	for(i = 0;i<subspace_size; i++) {
+		value = va_arg(args, Vector*);
+		vector_list[i] = value;
+	}
+	va_end(args);
+	return [self initVectorSpace:space_size :subspace_size :vector_list];
 }
 /**********************************************************************************************/
 -(void) getVectorAtIndex:(int)index:(Vector*)res{
@@ -174,7 +188,6 @@
 }
 /**********************************************************************************************/
 -(void) dealloc{
-	NSLog(@"Deallocing VectorSpace\n" );
 	int i;
 	for(i = 0;i<m_iSubspaceRank; i++) {
 		[m_vBasis[i] release];

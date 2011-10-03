@@ -20,6 +20,7 @@
 -(BOOL) isInSpace:(Vector*)v;
 -(NSString*) toString;
 -(BOOL) initVectorSpace:(int)space_size:(int)subspace_size:(Vector**) vector_list;
+-(BOOL) initVectorSpaceMultiple:(int)space_size:(int) subspace_size,...;
 -(void) getVectorAtIndex:(int)index:(Vector*)res;
 /*static functions*/
 +(NSString*) getZerolineString:(int) iSize;

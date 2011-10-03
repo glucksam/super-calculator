@@ -74,6 +74,16 @@
 	[ms_res release];
 }
 /**********************************************************************************************/
+-(bool) isZeroVector{
+	int i;
+	for (i = 0; i < m_iNumOfElements; i++) {
+		if(0 != m_dElements[i]){
+			return false;
+		}
+	}
+	return true;
+}
+/**********************************************************************************************/
 -(double) getNorm{
 	double dNorm = [Vector inner_prod:self :self];
 	return sqrt(dNorm);
@@ -138,7 +148,6 @@
 }
 /**********************************************************************************************/
 -(void) dealloc {
-    NSLog(@"Deallocing Vector\n" );
 	if (m_dElements!= nil) {
 		free(m_dElements);
 	}
@@ -167,7 +176,7 @@
 	uBasis[3] = [Vector alloc];
 	[uBasis[3] initNewVectorWithSring:@"[0,0,0,1]"];
 	VectorSpace* vSpace = [VectorSpace alloc];
-	[vSpace initVectorSpace:i_space_rank :i_subspace_rank :vBasis];
+	[vSpace initVectorSpaceMultiple:i_space_rank :i_subspace_rank ,vBasis[0],vBasis[1],vBasis[2],vBasis[3]];
 	VectorSpace* uSpace = [VectorSpace alloc];
 	[uSpace initVectorSpace:i_space_rank :i_subspace_rank :uBasis];
 
