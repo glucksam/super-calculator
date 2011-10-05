@@ -48,6 +48,8 @@ typedef enum
 -(void) doMatrix;
 -(void) doPolynom;
 -(void) doVector;
+-(bool) checkAndTest:(NSString*)input;
+-(bool) checkInput:(NSString*)input;
 
 @end
 

@@ -97,6 +97,31 @@
 	return res;
 }
 /**********************************************************************************************/
+-(NSString*) toStringForInit{
+	NSMutableString *print = [[NSMutableString alloc] init];
+	int i,j;
+	[print appendString:@"["];
+	for(i = 0; i<m_iSize; i++){
+		NSMutableString *line =  [[NSMutableString alloc] init];
+		for(j = 0; j < m_iSize; j++){
+			if (j == m_iSize-1) {
+				[line appendFormat:@"%0.3f", m_aMatrix[i][j]];
+			}else{
+				[line appendFormat:@"%0.3f ", m_aMatrix[i][j]];
+			}
+		}
+		if (i < m_iSize-1) {
+			[line appendFormat:@";"];
+		}
+		[print appendString:line];
+		[line release];
+	}
+	[print appendString:@"]"];
+	NSString* res = [NSString stringWithString: print];
+	[print release];
+	return res;	
+}
+/**********************************************************************************************/
 -(NSString*) triagonalMatrixToString{
 	if (nil == m_aTriangMat) {
 		[self triagonalizeAndInverse];

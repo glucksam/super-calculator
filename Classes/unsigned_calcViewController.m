@@ -10,6 +10,7 @@
 #import "calc_engine/Matrix.h"
 #import "calc_engine/Polynom.h"
 #import "calc_engine/Vector.h"
+#import	"MatrixTester.h"
 
 @implementation unsigned_calcViewController
 
@@ -152,6 +153,9 @@
 }
 
 -(void)getResult{
+	if (![self checkInput:minput.text]) {
+		return;
+	}
 	if(matrix == m_state){
 		[self parseMatrixInput];
 	}else if (polynom == m_state) {
@@ -160,13 +164,34 @@
 		[self parseVectorInput];
 	}
 }
-
+/*return true is it was a test or false otherwise*/
+-(bool) checkAndTest:(NSString*)input{
+	if ([input isEqualToString:@"test"]) {
+		if ([MatrixTester SanityTest]){
+			mlResult.text = @"ALL TESTS PASSED!!! :D";
+		}else {
+			mlResult.text = @"At least one test FAILED\nsee log for more information :'( ";
+		}
+		return true;
+	}
+	return false;		 
+}
+		 
+-(bool) checkInput:(NSString*)input{
+	if(minput == nil){
+		return false;
+	}
+	if ([self checkAndTest:input]) {
+		return false;
+	}
+	return true;
+}
 /*These 2 functions do both calculation and formalizing the result*/
 -(void) parseMatrixInput{
-	if(minput == nil)
-		return;
+
 	NSMutableString *ms_input = [NSMutableString stringWithString:minput.text];
 	NSMutableString* ms_Res = [NSMutableString stringWithString:@"original input:\n"];
+	
 	Matrix* A = [Matrix alloc];
 	Matrix* B = [Matrix alloc];
 	Matrix* result = [Matrix alloc];

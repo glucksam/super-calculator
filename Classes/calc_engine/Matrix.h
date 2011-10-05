@@ -50,6 +50,8 @@
 -(NSString*) triagonalMatrixToString;
 -(NSString*) inverseMatrixToString;
 -(NSString*) CharacteristicPolynomailandEigenvaluesToString;
+-(NSString*) toStringForInit;
+-(NSString*) toString;
 -(int) getMatrixRank;
 -(void) getTridiagonalMatrix:(Matrix*)triMat;
 -(float*) getLine:(int)i;
