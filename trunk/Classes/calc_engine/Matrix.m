@@ -562,9 +562,16 @@
 	m_aMatrix[i][j] = val;
 }
 /**********************************************************************************************/
-/*retrives a line, not duplicating it!*/
--(float*) getLine:(int)i{
-	return m_aMatrix[i];
+-(void) getCharacteristicPolynomail:(Polynom*)p{
+	if (m_pCharPol == nil) {
+		[self getCharacteristicPolynomailAndEigenvalues];
+	}
+	[Polynom copyPolynom:m_pCharPol :p];
+}
+/**********************************************************************************************/
+/*return the copy we have does not(!!!) duplicate it*/
+-(float*) getEigenValues{
+	return m_fEigenValues;
 }
 /**********************************************************************************************/
 -(void) initNewMatrix:(int)size{
@@ -572,6 +579,7 @@
 	[super setObjName:@"Matrix"];
 	m_aTriangMat = nil;
 	m_aInvMat = nil;
+	m_pCharPol = nil;
 	int i,j;
 	m_iSize = size;
 	m_aMatrix = (float **)malloc(m_iSize * sizeof(float*));

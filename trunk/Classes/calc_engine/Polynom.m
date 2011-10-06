@@ -119,6 +119,10 @@
 	}
 }
 /**********************************************************************************************/
++(void) copyPolynom:(Polynom*)original:(Polynom*)copy{
+	[copy initNewPolinomWithString:[original toStringForInit]];
+}
+/**********************************************************************************************/
 -(bool) isZeroPoly{
 	int i;
 	for (i = 0; i<=m_iRank; i++) {
