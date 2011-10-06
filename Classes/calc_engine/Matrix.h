@@ -54,7 +54,8 @@
 -(NSString*) toString;
 -(int) getMatrixRank;
 -(void) getTridiagonalMatrix:(Matrix*)triMat;
--(float*) getLine:(int)i;
+-(void) getCharacteristicPolynomail:(Polynom*)p;
+-(float*) getEigenValues;
 -(void)getKernel:(VectorSpace*) vec_space;
 /*static*/ 
 +(bool) compare:(Matrix*) A: (Matrix*) B;
