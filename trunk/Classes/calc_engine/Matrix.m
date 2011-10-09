@@ -12,6 +12,7 @@
 #import "Operations.h"
 #import "Vector.h"
 #import "VectorSpace.h"
+#import "Logger.h"
 
 @implementation Matrix
 @synthesize m_fTrace;
@@ -34,6 +35,7 @@
 			[mRes set:i :k :fTemp];
 		}
 	}
+	[Logger PrintToLog:@"multiplying matrixes" :INFO :MATRIX :3,A,B,mRes];
 }
 /**********************************************************************************************/
 +(void) multiply:(float) constant:(Matrix*)A:(Matrix*)mRes{
@@ -44,16 +46,23 @@
 			[mRes set:i :j :constant*[A getElement:i :j]];
 		}
 	}
+	NSString* temp = [NSString stringWithFormat:@"multiplying by const %f",constant];
+	[Logger PrintToLog:temp:INFO :MATRIX :2,A,mRes];
 }
 /**********************************************************************************************/
 +(bool) compare:(Matrix*) A:(Matrix*) B{
-	if(A.m_iSize != B.m_iSize)
+	if(A.m_iSize != B.m_iSize){
+		[Logger PrintToLog:@"trying to compare matrixes with different sizes" :INFO :MATRIX :2,A,B];
 		return false;
+	}
 	int i,j;
 	for(i = 0; i<A.m_iSize; i++){
 		for(j = 0; j < A.m_iSize; j++){
-			if([A getElement:i:j] != [B getElement:i:j])
+			if([A getElement:i:j] != [B getElement:i:j]){
+				NSString* temp = [NSString	stringWithFormat:@"trying to compare matrixes with different entry [%i][%j]",i,j];
+				[Logger PrintToLog:temp:INFO :MATRIX :2,A,B];
 				return false;
+			}
 		}
 	}	
 	return true;
@@ -68,6 +77,7 @@
 			[mRes set:i :j :[A getElement:i :j]+[B getElement:i :j]];
 		}
 	}
+	[Logger PrintToLog:@"adding matrixes" :INFO :MATRIX :3,A,B,mRes];
 }
 /**********************************************************************************************/
 +(void) copyMatrix:(Matrix*)original:(Matrix*)copy{
@@ -192,10 +202,14 @@
 				}
 			}
 		}else {
-			NSLog(@"Issue with matrix!!!");
+			[Logger PrintToLog:@"Issue with matrix while trying to inverse- insufficient rank!!!":
+						ERROR :MATRIX :0];
+			[m_aInvMat release];
+			m_aInvMat = nil;
 		}
 	}
 	[tempMat release];
+	[Logger PrintToLog:@"result of inverse" :INFO :MATRIX :1,m_aInvMat];
 }
 /**********************************************************************************************/
 -(void) triagonalizeAndInverse{
@@ -239,7 +253,8 @@
 	}else {
 		[self inverse];
 	}
-	[self fixTrigiagonalMatrix];
+	[self fixTridiagonalMatrix];
+	[Logger PrintToLog:@"result of tridiagonal" :INFO :MATRIX :1,m_aTriangMat];
 }
 /**********************************************************************************************/
 -(void) getCharacteristicPolynomailAndEigenvalues{
@@ -248,7 +263,7 @@
 	m_pCharPol = [Polynom alloc];
 	[p det:(Polynom *)m_pCharPol];
 	[p release];
-	NSLog(@"characteristic polynomial = %@", [m_pCharPol toString]);
+	[Logger PrintToLog:@"characteristic polynomial" :INFO :POLYNOMIAL:1,m_pCharPol];
 	[m_pCharPol getRationalRoots:&m_fEigenValues];
 }
 /**********************************************************************************************/
@@ -264,40 +279,8 @@
 			}
 		}
 	}
-}
-/**********************************************************************************************/
-/*we are assuming none of them are 0 lines... 
- If one is a zero line it would be beneath the non zeor one, and that's the one
- we are going to zerofy anyways*/
-+(bool) areLinesDependent:(Matrix*)mat:(int)iLine:(int)jLine{
-	int i,j;
-	double* tempVec;
-	float fTempI,fTempJ;
-	Vector* vec;
-	bool res = false;
-	for (i = 0; i < mat.m_iSize; i++) {
-		if (0 == [mat getElement:iLine :i] && 0 == [mat getElement:jLine :i]) {
-			continue;
-		}else if(0 == [mat getElement:iLine :i] || 0 ==[mat getElement:jLine :i]){
-			return false;
-		}else {
-			fTempI = [mat getElement:iLine :i];
-			fTempJ = [mat getElement:jLine :i];
-			tempVec = (double*)malloc(mat.m_iSize*sizeof(double));
-			for (j = 0; j < mat.m_iSize; j++) {
-				tempVec[j] = [mat getElement:iLine :j]*fTempJ-[mat getElement:jLine :j]*fTempI;
-			}
-			vec = [Vector alloc];
-			[vec initNewVectorWithArray:mat.m_iSize :tempVec];
-			if ([vec isZeroVector]) {
-				res = true;
-			}
-			[vec release];
-			free(tempVec);
-			return res;
-		}
-	}
-	return true;
+	NSString* temp = [NSString stringWithFormat:@"creating A-%fI",fEigenValue];
+	[Logger PrintToLog:temp :INFO :MATRIX :1,mat];
 }
 /**********************************************************************************************/
 /*returns 0 if no such line exists, othewise return the first k>i such that mat[k][j]!=0*/
@@ -346,7 +329,7 @@
 	}
 }
 /**********************************************************************************************/
--(void) fixTrigiagonalMatrix{
+-(void) fixTridiagonalMatrix{
 	int i,j,index,iMove;
 	[self unifyTridiagonalEntries];
 	for (i = 0; i<m_iSize; i++) {
@@ -371,7 +354,8 @@
 	VectorSpace* vec_space = [VectorSpace alloc];
 	[self createEigenTransformationMatrix:fEigenValue:kernelMatrix];
 	[kernelMatrix getKernel:vec_space];
-	NSLog(@"eigen space of eigen value %f is:\n%@",fEigenValue,[vec_space toString]);
+	NSString* sMsg = [NSString stringWithFormat:@"eigen space of eigen value %f",fEigenValue];
+	[Logger PrintToLog:sMsg :INFO :VECTOR_SPACE :1,vec_space];
 	NSString* res = [vec_space toString];
 	[kernelMatrix release];
 	[vec_space release];
@@ -384,7 +368,6 @@
 	float fTempSum;
 	[self triagonalizeAndInverse];
 	[self getTridiagonalMatrix:ker];
-	NSLog(@"matrix has rank %i, looking for kernel at:\n%@",[self getMatrixRank],[ker toString]);
 	int subspace_size = m_iSize - [self getMatrixRank];
 	Vector** vecs = (Vector**) malloc(subspace_size*sizeof(Vector*));
 	double* sol = (double *)malloc(m_iSize * sizeof(double));
@@ -409,7 +392,8 @@
 			}else if ([ker getElement:i:i] != 0) { /*if it's 0, there's a problem in algorithm*/
 				sol[i] = fTempSum/[ker getElement:i:i]*(-1);
 			}else {
-				NSLog(@"A problem in retrieving the kernel of this matrix!!!");
+				[Logger PrintToLog:@"A problem in retrieving the kernel of this matrix!!!" :
+							 ERROR :MATRIX :1,ker];
 				break;
 			}
 		}
@@ -423,6 +407,8 @@
 	}
 	free(vecs);
 	[ker release];
+	NSString* sMsg = [NSString stringWithFormat:@"kerner of\n%@",[self toString]];
+	[Logger PrintToLog:sMsg :INFO :VECTOR_SPACE :1,vec_space];
 }
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{
@@ -433,6 +419,7 @@
 			[transposeMat set:i :j : m_aMatrix[j][i]];
 		}
 	}
+	[Logger PrintToLog:@"transpose matrix" :INFO :MATRIX :1,transposeMat];
 }
 /**********************************************************************************************/
 -(float) calcAdj:(int)i:(int)j{
@@ -463,6 +450,7 @@
 			[adj set:i :j :[self calcAdj:i :j]];
 		}
 	}
+	[Logger PrintToLog:@"adjoint matrix" :INFO :MATRIX :1,adj];
 }
 /**********************************************************************************************/
 -(void) trace{
@@ -471,6 +459,8 @@
 	for(i = 0; i<m_iSize; i++){
 		m_fTrace += m_aMatrix[i][i];
 	}
+	NSString* sMsg = [NSString stringWithFormat:@"trace is %f",m_fTrace];
+	[Logger PrintToLog:sMsg :INFO :MATRIX :0];
 }
 /**********************************************************************************************/
 -(void) det{
@@ -482,6 +472,8 @@
 	for (i = 0; i < m_iSize; i++){
 		m_fdet *= [m_aTriangMat getElement:i :i];
 	}
+	NSString* sMsg = [NSString stringWithFormat:@"det is %f",m_fdet];
+	[Logger PrintToLog:sMsg :INFO :MATRIX :0];
 }
 /**********************************************************************************************/
 -(float) det:(int*) row:(int*) column: (int) size{
@@ -537,6 +529,8 @@
 			iRank++;
 		}
 	}
+	NSString* sMsg = [NSString stringWithFormat:@"matrix rank is %d",iRank];
+	[Logger PrintToLog:sMsg :INFO :MATRIX :0];
 	return iRank;
 }
 /**********************************************************************************************/
@@ -599,6 +593,7 @@
 			[self set: i:j:baseMatrix[i][j]];
 		}
 	}
+	[Logger PrintToLog:@"new matrix" :INFO :MATRIX :1,self];
 }
 /**********************************************************************************************/
 -(void) initNewMatrixWithString:(NSString*) input{
@@ -615,6 +610,7 @@
 			[self set: i:j:[[line objectAtIndex: j] floatValue]];
 		}
 	}
+	[Logger PrintToLog:@"new matrix" :INFO :MATRIX :1,self];
 }
 /**********************************************************************************************/
 -(void) dealloc {

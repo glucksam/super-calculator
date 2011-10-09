@@ -7,7 +7,7 @@
 //
 
 #import "MatrixTester.h"
-
+#import "Logger.h"
 
 @implementation MatrixTester
 
@@ -18,6 +18,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 /*should be tested after tridiagonalizeAndInverse*/
 +(bool) testDet:(Matrix*)mat{
 	float fDet = mat.m_fdet;
+	NSString* sMsg = [NSString stringWithFormat:@"testDet\ndet = %f",fDet];
+	[Logger PrintToLog:sMsg:INFO :MATRIX :0];
 	if (YES == [[mat toStringForInit] isEqualToString:ID4]) {
 		return (fDet == 1);
 	}else if (YES == [[mat toStringForInit] isEqualToString:Sing3]) {
@@ -30,6 +32,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 }
 /**********************************************************************************************/
 +(bool) testTridiagonal:(Matrix*) mat{
+	NSString* sMsg = [NSString stringWithFormat:@"testTridiagonal\ntridiagonal is:\n%@",[mat triagonalMatrixToString]];
+	[Logger PrintToLog:sMsg:INFO :MATRIX :0];
 	if (YES == [[mat toStringForInit] isEqualToString:ID4]) {
 		return (YES == [[mat toString] isEqualToString:[mat triagonalMatrixToString]]);
 	}else if (YES == [[mat toStringForInit] isEqualToString:Sing3]) {
@@ -42,6 +46,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 }
 /**********************************************************************************************/
 +(bool) testInverse:(Matrix*) mat{
+	NSString* sMsg = [NSString stringWithFormat:@"testInverse\ninverse is:\n%@",[mat inverseMatrixToString]];
+	[Logger PrintToLog:sMsg:INFO :MATRIX :0];
 	if (YES == [[mat toStringForInit] isEqualToString:ID4]) {
 		return (YES == [[mat toString] isEqualToString:[mat inverseMatrixToString]]);
 	}else if (YES == [[mat toStringForInit] isEqualToString:Sing3]) {
@@ -72,6 +78,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 	}else {/*this part will use wolfram for future tests*/
 		res = true;
 	}
+	NSString* sMsg = [NSString stringWithFormat:@"testAdjoint\nadjoint is:\n%@",[adj toString]];
+	[Logger PrintToLog:sMsg:INFO :MATRIX :0];
 	[adj release];
 	[tmp release];
 	return res;
@@ -82,6 +90,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 	Polynom* pChar = [Polynom alloc];
 	Polynom* pExpected = [Polynom alloc];
 	[mat getCharacteristicPolynomail:pChar];
+	NSString* sMsg = [NSString stringWithFormat:@"testCharacteristicPolynomailandEigenvalues\ncharacteristic polynomial is:\n%@",[pChar toString]];
+	[Logger PrintToLog:sMsg:INFO :MATRIX :0];
 	bool res = false;
 	if (YES == [[mat toStringForInit] isEqualToString:ID4]) {
 		[pExpected initNewPolinomWithString:@"1x^4+-4x^3+6x^2+-4x^1+1x^0"];
@@ -101,6 +111,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 }
 /**********************************************************************************************/
 +(bool) testRank:(Matrix*)mat{
+	NSString* sMsg = [NSString stringWithFormat:@"testRank\nmatrix rank is:\n%d",[mat getMatrixRank]];
+	[Logger PrintToLog:sMsg:INFO :MATRIX :0];
 	if (YES == [[mat toStringForInit] isEqualToString:ID4]) {
 		return ([mat getMatrixRank] == 4);
 	}else if (YES == [[mat toStringForInit] isEqualToString:Sing3]) {
@@ -112,11 +124,8 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 	}	
 }
 /**********************************************************************************************/
-+(void)PrintError:(NSString*)sError:(Matrix*)mat{
-	NSLog(@"Error: matrix:\n%@\n%@",[mat toStringForInit],sError);
-}
-/**********************************************************************************************/
 +(bool) TestWith:(Matrix*) mat{
+	[Logger PrintToLog:@"testing" :INFO :MATRIX :1,mat];
 	if ([MatrixTester testTridiagonal:mat]){
 		if ([MatrixTester testInverse:mat]){
 			if([MatrixTester testDet:mat]){
@@ -125,22 +134,22 @@ static NSString* Huge5 = @"[1.000 2.000 4.000 0.000 0.000;0.000 1.000 2.000 4.00
 						if ([MatrixTester testCharacteristicPolynomailandEigenvalues:mat]) {
 							return true;
 						}else {
-							[MatrixTester PrintError:@"characteristic polynimail test failed" :mat];
+							[Logger PrintToLog: @"characteristic polynimail test failed":ERROR :MATRIX :0];
 						}
 					}else {
-						[MatrixTester PrintError:@"rank test failed" :mat];
+						[Logger PrintToLog: @"rank test failed":ERROR :MATRIX :0];
 					}
 				}else {
-					[MatrixTester PrintError:@"adjoint test failed" :mat];
+					[Logger PrintToLog: @"adjoint test failed":ERROR :MATRIX :0];
 				}
 			}else {
-				[MatrixTester PrintError:@"det test failed" :mat];
+				[Logger PrintToLog: @"det test failed":ERROR :MATRIX :0];
 			}
 		}else {
-			[MatrixTester PrintError:@"inverse test failed" :mat];
+			[Logger PrintToLog: @"inverse test failed":ERROR :MATRIX :0];
 		}
 	}else {
-		[MatrixTester PrintError:@"triagonal test failed" :mat];
+		[Logger PrintToLog: @"triagonal test failed":ERROR :MATRIX :0];
 	}
 	return false;
 }

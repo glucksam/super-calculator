@@ -19,7 +19,6 @@
 +(bool) testAdjoint:(Matrix*)mat;
 +(bool) testRank:(Matrix*)mat;
 +(bool) testCharacteristicPolynomailandEigenvalues:(Matrix*) mat;
-+(void) PrintError:(NSString*)sError:(Matrix*)mat;
 /*public functions*/
 +(bool) TestWith:(Matrix*) mat;
 +(bool) RandomTests;
