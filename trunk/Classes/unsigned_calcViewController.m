@@ -11,6 +11,7 @@
 #import "calc_engine/Polynom.h"
 #import "calc_engine/Vector.h"
 #import	"MatrixTester.h"
+#import "PolynomialTester.h"
 
 @implementation unsigned_calcViewController
 
@@ -145,9 +146,7 @@
 -(BOOL)textFieldShouldReturn:(UITextField *)theTextField {
 	if(theTextField == minput) {
 		[minput resignFirstResponder];
-		if([minput.text compare:@""] != NSOrderedSame){
-			[self getResult];
-		}
+		[self getResult];
 	}
 	return YES;
 }
@@ -166,15 +165,26 @@
 }
 /*return true is it was a test or false otherwise*/
 -(bool) checkAndTest:(NSString*)input{
+	NSMutableString* sMsg = [[NSMutableString alloc]init];
+	bool bRes = false;
 	if ([input isEqualToString:@"test"]) {
+		/*test matrices*/
 		if ([MatrixTester SanityTest]){
-			mlResult.text = @"ALL TESTS PASSED!!! :D";
+			[sMsg appendFormat:@"Matrix: ALL TESTS PASSED!!! :D\n"];
 		}else {
-			mlResult.text = @"At least one test FAILED\nsee log for more information :'( ";
+			[sMsg appendFormat:@"Matrix: At least one test FAILED\nsee log for more information :'( \n"];
 		}
-		return true;
+		/*test polynomials*/
+		if ([PolynomialTester SanityTest]){
+			[sMsg appendFormat:@"Polynomial: ALL TESTS PASSED!!! :D\n"];
+		}else {
+			[sMsg appendFormat:@"Polynomial: At least one test FAILED\nsee log for more information :'( \n"];
+		}
+		mlResult.text = sMsg;
+		bRes = true;
 	}
-	return false;		 
+	[sMsg release];
+	return bRes;		 
 }
 		 
 -(bool) checkInput:(NSString*)input{
