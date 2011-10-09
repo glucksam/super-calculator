@@ -9,6 +9,7 @@
 #import "polymatrix.h"
 #import "Polynom.h"
 #import "Matrix.h"
+#import "Logger.h"
 
 
 @implementation polymatrix
@@ -48,7 +49,7 @@
 			[self set: i:j:string];
 		}
 	}
-	NSLog(@"\n%@",[self toString]);
+	[Logger PrintToLog:@"New polymatrix" :INFO :POLYMATRIX :1,self];
 }
 /**********************************************************************************************/
 -(void) det:(Polynom*) pDet{
