@@ -37,7 +37,7 @@
 -(NSString*) EigenSpaceToString:(float)fEigenValue;
 -(void)createEigenTransformationMatrix:(float)fEigenValue:(Matrix*)mat;
 -(void) initNewMatrixWithFloatMatrix:(int)size:(float**)baseMatrix;
--(void) fixTrigiagonalMatrix;
+-(void) fixTridiagonalMatrix;
 -(int)findFirstNonZeroEntryInLine:(int)line;
 -(int)findFirstNonZeroEntryInRow:(int)row;
 -(void)swapLines:(int)i:(int)j;
@@ -62,7 +62,6 @@
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
 +(void) multiply:(float) constant: (Matrix*) A: (Matrix*) mRes;
 +(void) addMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
-+(bool) areLinesDependent:(Matrix*)mat:(int)iLine:(int)jLine;
 +(void) copyMatrix:(Matrix*)original:(Matrix*)copy;
 
 @end
