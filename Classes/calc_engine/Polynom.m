@@ -8,7 +8,7 @@
 
 #import "Polynom.h"
 #import "Operations.h"
-
+#import "Logger.h"
 
 @implementation Polynom
 @synthesize m_iRank;
@@ -22,7 +22,7 @@
 		coeffs [i] = [p getCoefficiant:i]*constant;
 	}
 	[pRes initNewPolinomWithCoeffs:deg :coeffs];
-	free(coeffs);
+	free(coeffs);	
 }
 /**********************************************************************************************/
 +(void) multiply:(Polynom*) p:(Polynom*) q:(Polynom*) prod{
@@ -74,20 +74,6 @@
 	return res;
 }
 /**********************************************************************************************/
-+(bool) verifyDivide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residu{
-	Polynom* multRes = [Polynom alloc];
-	Polynom* calcRes = [Polynom alloc];
-	[Polynom multiply:q :result :multRes];
-	[Polynom add:multRes :residu :calcRes];
-	bool res = false;
-	if ([Polynom compare:p :calcRes]) {
-		res = true;
-	}
-	[calcRes release];
-	[multRes release];
-	return res;
-}
-/**********************************************************************************************/
 +(void) divide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residue{
 	Polynom *tempLeft = [Polynom alloc];
 	Polynom *tempAdd = [Polynom alloc];
@@ -112,11 +98,7 @@
 	[tempAdd release];
 	[tempCalc release];
 	[polyTempStr release];
-	if ([Polynom verifyDivide:p :q :result :residue]) {
-		NSLog(@"Success: result %@, residue %@",[result toString],[residue toString]);
-	}else {
-		NSLog(@"faliure: result %@, residue %@",[result toString],[residue toString]);
-	}
+	[Logger PrintToLog:@"divide:":INFO :POLYNOMIAL :4,p,q,result,residue];
 }
 /**********************************************************************************************/
 +(void) copyPolynom:(Polynom*)original:(Polynom*)copy{
@@ -167,6 +149,7 @@
 	[Operations getFactors:abs(m_fCoefficients[0]):&a_factors];
 	[Operations getFactors:abs(m_fCoefficients[m_iRank]):&z_factors];
 	[Operations getCombinations:a_factors:z_factors:&optional_roots];
+	[Logger PrintToLog:@"optional roots" :INFO :FLOAT :1,optional_roots];
 	int i, ammount = 0;
 	*roots = (float*) malloc((optional_roots[0]+1)* sizeof(float));
 	for (i = 1; i<=optional_roots[0]; i++) {

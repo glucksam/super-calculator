@@ -15,25 +15,25 @@
 	int			m_iRank;
 }
 @property (readonly) int m_iRank;
-/*private functions*/
-
-/*public functions*/
--(void) initNewPolinomWithString:(NSString*) input;
--(void) initNewPolinomWithCoeffs:(int) rank:(float*) coeffs;
+/*private functions- internal functions*/
 -(float) getCoefficiant:(int)index;
 -(void) setCoefficiant:(int)index: (float) value;
 -(int) getRank;
 -(void) zerofy;
 -(void) clean;
+-(void) resetRank;
+/*public functions*/
+-(void) initNewPolinomWithString:(NSString*) input;
+-(void) initNewPolinomWithCoeffs:(int) rank:(float*) coeffs;
 -(float) getValue:(float) x;
 -(bool) isZeroPoly;
 -(bool) isRoot:(float)x;
 -(void) getRationalRoots:(float**)roots;
--(void) resetRank;
 -(NSString*) toStringForInit;
 -(NSString*) toString;
 /*static functions*/
 +(void) initCoefficiant:(float**) coef: (int) size;
+
 +(void) constMultiply:(Polynom*) p:(float) constant:(Polynom*) pRes;
 +(void) multiply:(Polynom*) p:(Polynom*) q:(Polynom*) prod;
 +(void) add:(Polynom*) p:(Polynom*) q:(Polynom*) pSum;
