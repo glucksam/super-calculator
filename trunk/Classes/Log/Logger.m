@@ -14,7 +14,31 @@
 #import "VectorSpace.h"
 
 @implementation Logger
-+(void) PrintToLog:(NSString*)sMsg:(typeID)type:(elementID)Id:(int)num_of_elemets,...{
+
+static Logger* Log;
+
++(Logger*)getInstance{
+	@synchronized(self){
+		if (!Log){
+			Log = [[Logger alloc] init];
+		}
+		return Log;
+	}
+}
+
+-(id) init{
+	m_bIsActive = true;
+	return [super init];
+}
+
+-(void) setIsActive:(bool)bIsActive{
+	m_bIsActive = bIsActive;
+}
+
+-(void) PrintToLog:(NSString*)sMsg:(typeID)type:(elementID)Id:(int)num_of_elemets,...{
+	if (!m_bIsActive) {
+		return;
+	}
 	NSMutableString* tempStr = [[NSMutableString alloc] init];
 	int i;
 	

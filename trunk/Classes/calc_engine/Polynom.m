@@ -98,7 +98,7 @@
 	[tempAdd release];
 	[tempCalc release];
 	[polyTempStr release];
-	[Logger PrintToLog:@"divide:":INFO :POLYNOMIAL :4,p,q,result,residue];
+	[[Logger getInstance] PrintToLog:@"divide:":INFO :POLYNOMIAL :4,p,q,result,residue];
 }
 /**********************************************************************************************/
 +(void) copyPolynom:(Polynom*)original:(Polynom*)copy{
@@ -149,7 +149,7 @@
 	[Operations getFactors:abs(m_fCoefficients[0]):&a_factors];
 	[Operations getFactors:abs(m_fCoefficients[m_iRank]):&z_factors];
 	[Operations getCombinations:a_factors:z_factors:&optional_roots];
-	[Logger PrintToLog:@"optional roots" :INFO :FLOAT :1,optional_roots];
+	[[Logger getInstance] PrintToLog:@"optional roots" :INFO :FLOAT :1,optional_roots];
 	int i, ammount = 0;
 	*roots = (float*) malloc((optional_roots[0]+1)* sizeof(float));
 	for (i = 1; i<=optional_roots[0]; i++) {

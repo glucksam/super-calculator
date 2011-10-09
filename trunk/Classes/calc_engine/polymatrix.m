@@ -49,7 +49,7 @@
 			[self set: i:j:string];
 		}
 	}
-	[Logger PrintToLog:@"New polymatrix" :INFO :POLYMATRIX :1,self];
+	[[Logger getInstance] PrintToLog:@"New polymatrix" :INFO :POLYMATRIX :1,self];
 }
 /**********************************************************************************************/
 -(void) det:(Polynom*) pDet{
