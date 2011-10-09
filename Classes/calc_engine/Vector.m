@@ -8,7 +8,7 @@
 
 #import "Vector.h"
 #import "VectorSpace.h"
-
+#import "Logger.h"
 
 @implementation Vector
 @synthesize m_iNumOfElements;
@@ -45,7 +45,8 @@
 	}
 	[ms_res appendFormat:@"]"];
 	[res initNewVectorWithSring:ms_res];
-	[ms_res release];	
+	[ms_res release];
+	[Logger PrintToLog:@"add" :INFO :VECTOR :3,v,u,res];
 }
 /**********************************************************************************************/
 +(double) inner_prod:(Vector*) v:(Vector*) u{
@@ -54,6 +55,8 @@
 	for (i = 1; i<=[v m_iNumOfElements]; i++) {
 		inRes+=[v getElement:i]*[u getElement:i];
 	}
+	NSString* sMsg = [NSString stringWithFormat:@"inner product = %f",inRes];
+	[Logger PrintToLog:sMsg:INFO :VECTOR :2,v,u];
 	return inRes;
 }
 /**********************************************************************************************/
@@ -72,6 +75,8 @@
 	[ms_res appendFormat:@"]"];
 	[res initNewVectorWithSring:ms_res];
 	[ms_res release];
+	NSString* sMsg = [NSString stringWithFormat:@"multiply by constant %f",con];
+	[Logger PrintToLog:sMsg:INFO :VECTOR :2,v,res];
 }
 /**********************************************************************************************/
 -(bool) isZeroVector{

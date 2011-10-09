@@ -8,6 +8,7 @@
 
 #import "VectorSpace.h"
 #import "Matrix.h"
+#import "Logger.h"
 
 @implementation VectorSpace
 @synthesize m_iSubspaceRank;
@@ -38,10 +39,12 @@
 	[super setObjName:@"Vector Space"];
 	int i;
 	if(space_size < subspace_size){
-		NSLog(@"subspace bigger then space- impossible for basis to be independent");
+		[Logger PrintToLog:@"subspace bigger then space- impossible for basis to be independent":
+					ERROR :VECTOR_SPACE :0];
 		return FALSE;
 	}else if (![VectorSpace isIndependentGroup:subspace_size:vector_list]) {
-		NSLog(@"basis is not independent!!!");
+		[Logger PrintToLog:@"basis is not independent!!!":ERROR :VECTOR_ARRAY:
+		 subspace_size,vector_list];
 		return FALSE;
 	}else {
 		m_iSpaceRank = space_size;
@@ -51,6 +54,7 @@
 			m_vBasis[i] = [Vector alloc];
 			[m_vBasis[i] initNewVectorWithSring:[vector_list[i] toString]];
 		}
+		[Logger PrintToLog:@"New vector space":INFO :VECTOR_SPACE:1,self];
 		return TRUE;
 	}
 }
