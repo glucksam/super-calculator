@@ -168,23 +168,23 @@
 	NSMutableString* sMsg = [[NSMutableString alloc]init];
 	bool bRes = false;
 	if ([input isEqualToString:@"test"]) {
+		bRes = true;
 		/*test matrices*/
 		if ([MatrixTester SanityTest]){
 			[sMsg appendFormat:@"Matrix: ALL TESTS PASSED!!! :D\n"];
 		}else {
-			[sMsg appendFormat:@"Matrix: At least one test FAILED\nsee log for more information :'( \n"];
+			[sMsg appendFormat:@"Matrix: At least one test FAILED\nsee log for more information :'(\n"];
 		}
 		/*test polynomials*/
 		if ([PolynomialTester SanityTest]){
 			[sMsg appendFormat:@"Polynomial: ALL TESTS PASSED!!! :D\n"];
 		}else {
-			[sMsg appendFormat:@"Polynomial: At least one test FAILED\nsee log for more information :'( \n"];
+			[sMsg appendFormat:@"Polynomial: At least one test FAILED\nsee log for more information :'(\n"];
 		}
 		mlResult.text = sMsg;
-		bRes = true;
 	}
 	[sMsg release];
-	return bRes;		 
+	return bRes;
 }
 		 
 -(bool) checkInput:(NSString*)input{
