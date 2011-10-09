@@ -35,7 +35,7 @@
 			[mRes set:i :k :fTemp];
 		}
 	}
-	[Logger PrintToLog:@"multiplying matrixes" :INFO :MATRIX :3,A,B,mRes];
+	[[Logger getInstance] PrintToLog:@"multiplying matrixes" :INFO :MATRIX :3,A,B,mRes];
 }
 /**********************************************************************************************/
 +(void) multiply:(float) constant:(Matrix*)A:(Matrix*)mRes{
@@ -47,12 +47,12 @@
 		}
 	}
 	NSString* temp = [NSString stringWithFormat:@"multiplying by const %f",constant];
-	[Logger PrintToLog:temp:INFO :MATRIX :2,A,mRes];
+	[[Logger getInstance] PrintToLog:temp:INFO :MATRIX :2,A,mRes];
 }
 /**********************************************************************************************/
 +(bool) compare:(Matrix*) A:(Matrix*) B{
 	if(A.m_iSize != B.m_iSize){
-		[Logger PrintToLog:@"trying to compare matrixes with different sizes" :INFO :MATRIX :2,A,B];
+		[[Logger getInstance] PrintToLog:@"trying to compare matrixes with different sizes" :INFO :MATRIX :2,A,B];
 		return false;
 	}
 	int i,j;
@@ -60,7 +60,7 @@
 		for(j = 0; j < A.m_iSize; j++){
 			if([A getElement:i:j] != [B getElement:i:j]){
 				NSString* temp = [NSString	stringWithFormat:@"trying to compare matrixes with different entry [%i][%j]",i,j];
-				[Logger PrintToLog:temp:INFO :MATRIX :2,A,B];
+				[[Logger getInstance] PrintToLog:temp:INFO :MATRIX :2,A,B];
 				return false;
 			}
 		}
@@ -77,7 +77,7 @@
 			[mRes set:i :j :[A getElement:i :j]+[B getElement:i :j]];
 		}
 	}
-	[Logger PrintToLog:@"adding matrixes" :INFO :MATRIX :3,A,B,mRes];
+	[[Logger getInstance] PrintToLog:@"adding matrixes" :INFO :MATRIX :3,A,B,mRes];
 }
 /**********************************************************************************************/
 +(void) copyMatrix:(Matrix*)original:(Matrix*)copy{
@@ -202,14 +202,14 @@
 				}
 			}
 		}else {
-			[Logger PrintToLog:@"Issue with matrix while trying to inverse- insufficient rank!!!":
+			[[Logger getInstance] PrintToLog:@"Issue with matrix while trying to inverse- insufficient rank!!!":
 						ERROR :MATRIX :0];
 			[m_aInvMat release];
 			m_aInvMat = nil;
 		}
 	}
 	[tempMat release];
-	[Logger PrintToLog:@"result of inverse" :INFO :MATRIX :1,m_aInvMat];
+	[[Logger getInstance] PrintToLog:@"result of inverse" :INFO :MATRIX :1,m_aInvMat];
 }
 /**********************************************************************************************/
 -(void) triagonalizeAndInverse{
@@ -254,7 +254,7 @@
 		[self inverse];
 	}
 	[self fixTridiagonalMatrix];
-	[Logger PrintToLog:@"result of tridiagonal" :INFO :MATRIX :1,m_aTriangMat];
+	[[Logger getInstance] PrintToLog:@"result of tridiagonal" :INFO :MATRIX :1,m_aTriangMat];
 }
 /**********************************************************************************************/
 -(void) getCharacteristicPolynomailAndEigenvalues{
@@ -263,7 +263,7 @@
 	m_pCharPol = [Polynom alloc];
 	[p det:(Polynom *)m_pCharPol];
 	[p release];
-	[Logger PrintToLog:@"characteristic polynomial" :INFO :POLYNOMIAL:1,m_pCharPol];
+	[[Logger getInstance] PrintToLog:@"characteristic polynomial" :INFO :POLYNOMIAL:1,m_pCharPol];
 	[m_pCharPol getRationalRoots:&m_fEigenValues];
 }
 /**********************************************************************************************/
@@ -280,7 +280,7 @@
 		}
 	}
 	NSString* temp = [NSString stringWithFormat:@"creating A-%fI",fEigenValue];
-	[Logger PrintToLog:temp :INFO :MATRIX :1,mat];
+	[[Logger getInstance] PrintToLog:temp :INFO :MATRIX :1,mat];
 }
 /**********************************************************************************************/
 /*returns 0 if no such line exists, othewise return the first k>i such that mat[k][j]!=0*/
@@ -355,7 +355,7 @@
 	[self createEigenTransformationMatrix:fEigenValue:kernelMatrix];
 	[kernelMatrix getKernel:vec_space];
 	NSString* sMsg = [NSString stringWithFormat:@"eigen space of eigen value %f",fEigenValue];
-	[Logger PrintToLog:sMsg :INFO :VECTOR_SPACE :1,vec_space];
+	[[Logger getInstance] PrintToLog:sMsg :INFO :VECTOR_SPACE :1,vec_space];
 	NSString* res = [vec_space toString];
 	[kernelMatrix release];
 	[vec_space release];
@@ -392,7 +392,7 @@
 			}else if ([ker getElement:i:i] != 0) { /*if it's 0, there's a problem in algorithm*/
 				sol[i] = fTempSum/[ker getElement:i:i]*(-1);
 			}else {
-				[Logger PrintToLog:@"A problem in retrieving the kernel of this matrix!!!" :
+				[[Logger getInstance] PrintToLog:@"A problem in retrieving the kernel of this matrix!!!" :
 							 ERROR :MATRIX :1,ker];
 				break;
 			}
@@ -408,7 +408,7 @@
 	free(vecs);
 	[ker release];
 	NSString* sMsg = [NSString stringWithFormat:@"kerner of\n%@",[self toString]];
-	[Logger PrintToLog:sMsg :INFO :VECTOR_SPACE :1,vec_space];
+	[[Logger getInstance] PrintToLog:sMsg :INFO :VECTOR_SPACE :1,vec_space];
 }
 /**********************************************************************************************/
 -(void) transpose: (Matrix*) transposeMat{
@@ -419,7 +419,7 @@
 			[transposeMat set:i :j : m_aMatrix[j][i]];
 		}
 	}
-	[Logger PrintToLog:@"transpose matrix" :INFO :MATRIX :1,transposeMat];
+	[[Logger getInstance] PrintToLog:@"transpose matrix" :INFO :MATRIX :1,transposeMat];
 }
 /**********************************************************************************************/
 -(float) calcAdj:(int)i:(int)j{
@@ -450,7 +450,7 @@
 			[adj set:i :j :[self calcAdj:i :j]];
 		}
 	}
-	[Logger PrintToLog:@"adjoint matrix" :INFO :MATRIX :1,adj];
+	[[Logger getInstance] PrintToLog:@"adjoint matrix" :INFO :MATRIX :1,adj];
 }
 /**********************************************************************************************/
 -(void) trace{
@@ -460,7 +460,7 @@
 		m_fTrace += m_aMatrix[i][i];
 	}
 	NSString* sMsg = [NSString stringWithFormat:@"trace is %f",m_fTrace];
-	[Logger PrintToLog:sMsg :INFO :MATRIX :0];
+	[[Logger getInstance] PrintToLog:sMsg :INFO :MATRIX :0];
 }
 /**********************************************************************************************/
 -(void) det{
@@ -473,7 +473,7 @@
 		m_fdet *= [m_aTriangMat getElement:i :i];
 	}
 	NSString* sMsg = [NSString stringWithFormat:@"det is %f",m_fdet];
-	[Logger PrintToLog:sMsg :INFO :MATRIX :0];
+	[[Logger getInstance] PrintToLog:sMsg :INFO :MATRIX :0];
 }
 /**********************************************************************************************/
 -(float) det:(int*) row:(int*) column: (int) size{
@@ -530,7 +530,7 @@
 		}
 	}
 	NSString* sMsg = [NSString stringWithFormat:@"matrix rank is %d",iRank];
-	[Logger PrintToLog:sMsg :INFO :MATRIX :0];
+	[[Logger getInstance] PrintToLog:sMsg :INFO :MATRIX :0];
 	return iRank;
 }
 /**********************************************************************************************/
@@ -593,7 +593,7 @@
 			[self set: i:j:baseMatrix[i][j]];
 		}
 	}
-	[Logger PrintToLog:@"new matrix" :INFO :MATRIX :1,self];
+	[[Logger getInstance] PrintToLog:@"new matrix" :INFO :MATRIX :1,self];
 }
 /**********************************************************************************************/
 -(void) initNewMatrixWithString:(NSString*) input{
@@ -610,7 +610,7 @@
 			[self set: i:j:[[line objectAtIndex: j] floatValue]];
 		}
 	}
-	[Logger PrintToLog:@"new matrix" :INFO :MATRIX :1,self];
+	[[Logger getInstance] PrintToLog:@"new matrix" :INFO :MATRIX :1,self];
 }
 /**********************************************************************************************/
 -(void) dealloc {

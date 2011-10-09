@@ -24,7 +24,11 @@ typedef enum{
 }typeID;
 
 @interface Logger : NSObject {
-
+	bool m_bIsActive;
 }
-+(void) PrintToLog:(NSString*)sMsg:(typeID)type:(elementID)Id:(int)num_of_elemets,...;
+-(void) PrintToLog:(NSString*)sMsg:(typeID)type:(elementID)Id:(int)num_of_elemets,...;
+-(void) setIsActive:(bool) bIsActive;
+-(id) init;
++ (Logger*)getInstance;
+
 @end

@@ -17,13 +17,13 @@
 +(bool) testMultiply:(Polynom*)p:(Polynom*)q{
 	Polynom* pProd = [Polynom alloc];
 	[Polynom multiply:p :q :pProd];
-	[Logger PrintToLog:@"testMultiply\nresult:\n" :INFO :POLYNOMIAL :1,pProd];
+	[[Logger getInstance] PrintToLog:@"testMultiply\nresult:\n" :INFO :POLYNOMIAL :1,pProd];
 	int i;
 	bool res = true;
 	for (i = 0; i<p.m_iRank*q.m_iRank+1; i++) {
 		if (0 != ([p getValue:i]*[q getValue:i] - [pProd getValue:i])) {
 			NSString* tempStr = [NSString stringWithFormat:@"failed due to %i",i];
-			[Logger PrintToLog:tempStr :ERROR :POLYNOMIAL :0];
+			[[Logger getInstance] PrintToLog:tempStr :ERROR :POLYNOMIAL :0];
 			res = false;
 		}
 	}
@@ -40,7 +40,7 @@
 	[Polynom multiply:q :pResult :pMultRes];
 	[Polynom add:pMultRes :pResidue :pFinalRes];
 	bool res = false;
-	[Logger PrintToLog:@"testDivide\nresult and residue are" :INFO :POLYNOMIAL :2,pResult,pResidue];
+	[[Logger getInstance] PrintToLog:@"testDivide\nresult and residue are" :INFO :POLYNOMIAL :2,pResult,pResidue];
 	if ([Polynom compare:p :pFinalRes]) {
 		res = true;
 	}
@@ -55,13 +55,13 @@
 +(bool) testAdd:(Polynom*)p:(Polynom*)q{
 	Polynom* pAdd = [Polynom alloc];
 	[Polynom add:p :q :pAdd];
-	[Logger PrintToLog:@"testAdd\nresult:" :INFO :POLYNOMIAL :1,pAdd];
+	[[Logger getInstance] PrintToLog:@"testAdd\nresult:" :INFO :POLYNOMIAL :1,pAdd];
 	int i;
 	bool res = true;
 	for (i = 0; i<p.m_iRank+q.m_iRank+1; i++) {
 		if (0 != ([p getValue:i]+[q getValue:i] - [pAdd getValue:i])) {
 			NSString* tempStr = [NSString stringWithFormat:@"failed due to %i",i];
-			[Logger PrintToLog:tempStr :ERROR :POLYNOMIAL :0];
+			[[Logger getInstance] PrintToLog:tempStr :ERROR :POLYNOMIAL :0];
 			res = false;
 		}
 	}
@@ -86,7 +86,7 @@
 }
 /**********************************************************************************************/
 +(bool) TestWith:(Polynom*)p:(Polynom*)q{
-	[Logger  PrintToLog:@"testing polynomials:" :INFO :POLYNOMIAL :2,p,q];
+	[[Logger getInstance]  PrintToLog:@"testing polynomials:" :INFO :POLYNOMIAL :2,p,q];
 	if ([PolynomialTester testMultiply:p :q]){
 		if ([PolynomialTester testDivide :p :q]){
 			if([PolynomialTester testAdd:p :q]){
@@ -94,19 +94,19 @@
 					if ([PolynomialTester testGetRationalRoots:p]) {
 						return true;
 					}else {
-						[Logger PrintToLog:@"rational roots test failed":ERROR:POLYNOMIAL:0];
+						[[Logger getInstance] PrintToLog:@"rational roots test failed":ERROR:POLYNOMIAL:0];
 					}
 				}else {
-					[Logger PrintToLog:@"compare test failed":ERROR:POLYNOMIAL:0];
+					[[Logger getInstance] PrintToLog:@"compare test failed":ERROR:POLYNOMIAL:0];
 				}
 			}else {
-				[Logger PrintToLog:@"add test failed" :ERROR:POLYNOMIAL:0];
+				[[Logger getInstance] PrintToLog:@"add test failed" :ERROR:POLYNOMIAL:0];
 			}
 		}else {
-			[Logger PrintToLog:@"divide test failed" :ERROR:POLYNOMIAL:0];
+			[[Logger getInstance] PrintToLog:@"divide test failed" :ERROR:POLYNOMIAL:0];
 		}
 	}else {
-		[Logger PrintToLog:@"multiply test failed" :ERROR:POLYNOMIAL:0];
+		[[Logger getInstance] PrintToLog:@"multiply test failed" :ERROR:POLYNOMIAL:0];
 	}
 	return false;
 }
