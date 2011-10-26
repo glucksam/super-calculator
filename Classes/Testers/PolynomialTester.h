@@ -18,8 +18,9 @@
 +(bool) testAdd:(Polynom*)p:(Polynom*)q;
 +(bool) testCompare:(Polynom*)p:(Polynom*)q;
 +(bool) testGetRationalRoots:(Polynom*)p;
++(void) CreateRandomPolynomail:(Polynom*)p;
 /*public functions*/
 +(bool) TestWith:(Polynom*)p:(Polynom*)q;
-+(bool) RandomTests;
++(bool) RandomTest;
 +(bool) SanityTest;
 @end

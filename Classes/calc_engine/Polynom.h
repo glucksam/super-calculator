@@ -40,4 +40,5 @@
 +(void) divide:(Polynom*) p:(Polynom*) q:(Polynom*) result:(Polynom*)residue;
 +(bool) compare:(Polynom*) p:(Polynom*) q;
 +(void) copyPolynom:(Polynom*)original:(Polynom*)copy;
++(void) reduce:(Polynom*) p:(Polynom*) q:(Polynom*) pRes;
 @end

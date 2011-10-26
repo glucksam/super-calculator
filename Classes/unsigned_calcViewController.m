@@ -210,7 +210,7 @@
 		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"det"]];
 		[A initNewMatrixWithString: ms_input];
 		[ms_Res appendFormat:@"%@\n",[A toString]];
-		[ms_Res appendFormat:@"det = %0.3f",A.m_fdet];
+		[ms_Res appendFormat:@"det = %0.3f",[A getDet]];
 	}else if(YES == [minput.text hasPrefix:@"adj"]){
 		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"adj"]];
 		[A initNewMatrixWithString: ms_input];

@@ -16,7 +16,6 @@
 
 @implementation Matrix
 @synthesize m_fTrace;
-@synthesize m_fdet;
 @synthesize m_iSize;
 
 +(void) multiplyMatrix:(Matrix*) A:(Matrix*)B:(Matrix*)mRes{
@@ -115,9 +114,9 @@
 		NSMutableString *line =  [[NSMutableString alloc] init];
 		for(j = 0; j < m_iSize; j++){
 			if (j == m_iSize-1) {
-				[line appendFormat:@"%0.3f", m_aMatrix[i][j]];
+				[line appendFormat:@"%f", m_aMatrix[i][j]];
 			}else{
-				[line appendFormat:@"%0.3f ", m_aMatrix[i][j]];
+				[line appendFormat:@"%f ", m_aMatrix[i][j]];
 			}
 		}
 		if (i < m_iSize-1) {
@@ -476,6 +475,13 @@
 	[[Logger getInstance] PrintToLog:sMsg :INFO :MATRIX :0];
 }
 /**********************************************************************************************/
+-(float) getDet{
+	if (-1 == m_fdet) {
+		[self det];
+	}
+	return m_fdet;
+}
+/**********************************************************************************************/
 -(float) det:(int*) row:(int*) column: (int) size{
 	int i,j;
 	float det = 0;
@@ -574,6 +580,7 @@
 	m_aTriangMat = nil;
 	m_aInvMat = nil;
 	m_pCharPol = nil;
+	m_fdet = -1;
 	int i,j;
 	m_iSize = size;
 	m_aMatrix = (float **)malloc(m_iSize * sizeof(float*));
