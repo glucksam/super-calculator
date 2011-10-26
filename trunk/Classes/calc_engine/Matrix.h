@@ -21,7 +21,6 @@
 	float m_fdet;
 	float m_fTrace;
 }
-@property (readonly) float m_fdet;
 @property (readonly) float m_fTrace;
 @property (readonly) int m_iSize;
 /*private functions*/
@@ -57,6 +56,7 @@
 -(void) getCharacteristicPolynomail:(Polynom*)p;
 -(float*) getEigenValues;
 -(void)getKernel:(VectorSpace*) vec_space;
+-(float) getDet;
 /*static*/ 
 +(bool) compare:(Matrix*) A: (Matrix*) B;
 +(void) multiplyMatrix:(Matrix*) A: (Matrix*) B: (Matrix*) mRes;
