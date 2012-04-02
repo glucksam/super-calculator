@@ -464,10 +464,10 @@
 /**********************************************************************************************/
 -(void) det{
 	int i;
-	m_fdet = 1;
 	if (nil == m_aTriangMat) {
 		[self triagonalizeAndInverse];
 	}
+	m_fdet = 1;
 	for (i = 0; i < m_iSize; i++){
 		m_fdet *= [m_aTriangMat getElement:i :i];
 	}
