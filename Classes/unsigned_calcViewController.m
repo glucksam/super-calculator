@@ -206,7 +206,17 @@
 	Matrix* B = [Matrix alloc];
 	Matrix* result = [Matrix alloc];
 	float f_const;
-	if (YES == [minput.text hasPrefix:@"det"]) {
+	if (YES == [minput.text hasPrefix:@"all"]) {
+		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"all"]];
+		[A initNewMatrixWithString: ms_input];
+		[ms_Res appendFormat:@"%@\n",[A toString]];
+		[ms_Res appendFormat:@"det = %0.3f\n",[A getDet]];
+		[A adjMat:B];
+		[ms_Res appendFormat:@"adjoint matrix:\n %@\n",[B toString]];
+		[ms_Res appendFormat:@"inverse matrix:\n %@\n",[A inverseMatrixToString]];
+		[ms_Res appendFormat:@"triangle matrix:\n %@\n",[A triagonalMatrixToString]];
+		[ms_Res appendFormat:@"char = %@\n",[A CharacteristicPolynomailandEigenvaluesToString]];
+	}else if(YES == [minput.text hasPrefix:@"det"]) {
 		[ms_input deleteCharactersInRange:[ms_input rangeOfString:@"det"]];
 		[A initNewMatrixWithString: ms_input];
 		[ms_Res appendFormat:@"%@\n",[A toString]];
